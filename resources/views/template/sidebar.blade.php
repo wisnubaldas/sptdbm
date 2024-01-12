@@ -12,11 +12,11 @@
                 <div class="menu-profile-info">
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1">
-                            Sean Ngu
+                            {{Auth()->user()->name}}
                         </div>
                         <div class="menu-caret ms-auto"></div>
                     </div>
-                    <small>Front end developer</small>
+                    <small>{{Auth()->user()->email}}</small>
                 </div>
             </a>
         </div>

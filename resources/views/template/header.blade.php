@@ -1,7 +1,7 @@
 <div id="header" class="app-header">
 
     <div class="navbar-header">
-        <a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>Color</b> Admin</a>
+        <a href="#" class="navbar-brand"><span class="navbar-logo"></span> <b>Cardig Express </b> &nbsp;Nusantara</a>
         <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -12,7 +12,7 @@
 
     <div class="navbar-nav">
         <div class="navbar-item navbar-form">
-            <form action="" method="POST" name="search">
+            <form action="#" method="POST" name="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Enter keyword" />
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
@@ -85,7 +85,7 @@
             <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
                 <img src="{{asset('/assets/img/user/user-13.jpg')}}" alt="" />
                 <span>
-                    <span class="d-none d-md-inline">Adam Schwartz</span>
+                    <span class="d-none d-md-inline">{{Auth()->user()->name}}</span>
                     <b class="caret"></b>
                 </span>
             </a>
@@ -95,7 +95,7 @@
                 <a href="javascript:;" class="dropdown-item">Calendar</a>
                 <a href="javascript:;" class="dropdown-item">Setting</a>
                 <div class="dropdown-divider"></div>
-                <a href="javascript:;" class="dropdown-item">Log Out</a>
+                <a href="{{ route('logout') }}" class="dropdown-item">Log Out</a>
             </div>
         </div>
     </div>

@@ -10,6 +10,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.3",
+        "rennokki/laravel-eloquent-query-cache": "^3.4",
         "spatie/laravel-menu": "^4.1",
         "wisnubaldas/baldas-module": "^1.2",
         "yajra/laravel-datatables": "10.0"

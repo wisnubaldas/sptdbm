@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\DataTables\TpsOnline\GateExpInDataTable;
 use App\UseCase\GateInOutDatatablesUseCase;
 class InventoryController extends Controller
 {
@@ -19,6 +18,7 @@ class InventoryController extends Controller
     }
     public function get_data(Request $request){
         return $this->InOutData->make_tables();
+        
     }
 
     public function find_data(Request $request) {

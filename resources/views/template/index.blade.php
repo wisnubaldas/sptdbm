@@ -51,7 +51,9 @@
                 Cookies.set('active-menu',$(this)[0].id);
             })
             let activeMenu = Cookies.get('active-menu')
-            $('#'+activeMenu).parent().addClass('active').parent().parent().addClass('active')
+            if(activeMenu){
+                $('#'+activeMenu).parent().addClass('active').parent().parent().addClass('active')
+            }
         })
     </script>
     @stack('js')

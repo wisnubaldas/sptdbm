@@ -22,7 +22,7 @@ class GateInOutDatatablesUseCase implements GateInOutDatatablesUseCaseInterface
                             "no_bc11", "tgl_bc11", "no_pos_bc11", "pel_muat", "pel_transit","pel_bongkar",
                              "no_daftar_pabean", "tgl_daftar_pabean", "no_segel_bc");
         $first = GateExpIn::select($fillable)->where(['flag_gateout'=>1]);
-        $union = GateExpOut::select($fillable)->where(['flag_transfer'=>3])->union($first);
+        $union = GateExpOut::select($fillable)->where(['flag_transfer'=>2])->union($first);
         return DataTables::of($union)->make(true);
     }
 }
