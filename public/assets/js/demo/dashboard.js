@@ -106,14 +106,14 @@ var handleInteractiveChart = function () {
 		];
 		$.plot($("#interactive-chart"), [{
 				data: data1, 
-				label: "Page Views", 
+				label: "Import", 
 				color: COLOR_BLUE,
 				lines: { show: true, fill:false, lineWidth: 2 },
 				points: { show: true, radius: 3, fillColor: COLOR_WHITE },
 				shadowSize: 0
 			}, {
 				data: data2,
-				label: 'Visitors',
+				label: 'Export',
 				color: COLOR_GREEN,
 				lines: { show: true, fill:false, lineWidth: 2 },
 				points: { show: true, radius: 3, fillColor: COLOR_WHITE },
@@ -162,11 +162,11 @@ var handleDonutChart = function () {
 	"use strict";
 	if ($('#donut-chart').length !== 0) {
 		var donutData = [
-			{ label: "Chrome",  data: 35, color: COLOR_PURPLE_DARKER},
-			{ label: "Firefox",  data: 30, color: COLOR_PURPLE},
-			{ label: "Safari",  data: 15, color: COLOR_PURPLE_LIGHTER},
-			{ label: "Opera",  data: 10, color: COLOR_BLUE},
-			{ label: "IE",  data: 5, color: COLOR_BLUE_DARKER}
+			{ label: "200",  data: 35, color: COLOR_PURPLE_DARKER},
+			{ label: "300",  data: 30, color: COLOR_PURPLE},
+			{ label: "400",  data: 15, color: COLOR_PURPLE_LIGHTER},
+			{ label: "900",  data: 10, color: COLOR_BLUE},
+			{ label: "500",  data: 5, color: COLOR_BLUE_DARKER}
 		];
 		$.plot('#donut-chart', donutData, {
 			series: {

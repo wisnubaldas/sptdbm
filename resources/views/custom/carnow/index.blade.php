@@ -3,50 +3,17 @@
 @section('content')
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="javascript:;">Custom</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">Inventory</a></li>
+        <li class="breadcrumb-item"><a href="javascript:;">Carrent Now</a></li>
         <li class="breadcrumb-item active">index</li>
     </ol>
 
-    <h1 class="page-header">Inventory <small>data Inventory TPS</small></h1>
+    <h1 class="page-header">Daftar Barang Carrent Now  <small>Import/Export </small></h1>
     <div class="panel">
         <div class="panel-body">
             <div class="panel-loader"></div>
             <form action="{{ route('custom.inventory.find-data') }}" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-6 p-4">
-                        <div class="form-group row">
-                            <label class="form-label col-form-label col-lg-4">Default Date Ranges</label>
-                            <div class="col-lg-8">
-                                <div class="input-group" id="default-daterange">
-                                    <input type="text" name="date_range" class="form-control" value=""
-                                        placeholder="click to select the date range">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group row pt-4">
-                            <label class="form-label col-form-label col-lg-4">Change Type</label>
-                            <div class="col-lg-8">
-                                <div class="form-check mb-2 form-check-inline">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1" value="export" checked>
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Export
-                                    </label>
-                                </div>
-                                <div class="form-check mb-2 form-check-inline">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1" value="import">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Import
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="col-6 p-4">
                         <div class="form-group row">
                             <div class="col-lg-4">
@@ -60,6 +27,26 @@
 
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-group row pt-4">
+                                <label class="form-label col-form-label col-lg-4">Change Type</label>
+                                <div class="col-lg-8">
+                                    <div class="form-check mb-2 form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" value="export" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Export
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2 form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" value="import">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Import
+                                        </label>
+                                    </div>
+                                </div>
+    
                             </div>
                         </div>
                         <div class="form-group row pt-4">

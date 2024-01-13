@@ -9,6 +9,7 @@ class InventoryController extends Controller
 {
     protected $InOutData;
     public function __construct(GateInOutDatatablesUseCase $InOutData){
+        $this->middleware('auth');
         $this->InOutData = $InOutData;
     }
 
