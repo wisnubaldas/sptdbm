@@ -37,12 +37,8 @@
                 <div class="login-header">
                     <div class="brand">
                         <div class="d-flex align-items-center">
-                            <img class="image" src="{{asset('assets/img/cen_logo.png')}}"  style="width:75px;height:60px;padding:2px;"> <b>CEN</b>
+                            <img class="image" src="{{asset('assets/img/cen_full.png')}}"  style="width:350px;height:120px;padding:2px;">
                         </div>
-                        <small>PT Cardig Express Nusantara</small>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-lock"></i>
                     </div>
                 </div>
 

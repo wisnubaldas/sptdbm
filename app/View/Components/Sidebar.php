@@ -12,13 +12,16 @@ use App\Models\Menu as MenuData;
 class Sidebar extends Component
 {
     public $menu;
-    public $menu_data;
+    public $menu_data = [];
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        $this->menu_data = $this->build_tree($this->menu_data());
+        if($this->menu_data())
+        {
+            $this->menu_data = $this->build_tree($this->menu_data());
+        }
         $this->menu = $this->make_menu();
     }
 
@@ -81,7 +84,9 @@ class Sidebar extends Component
         return join("",$result);
     }
     protected function menu_data(){
-        return MenuData::all()->toArray();
+
+        $byPermission = auth()->user()->getPermissionsViaRoles()->pluck('name');
+        return MenuData::whereIn('id',$byPermission)->get()->toArray();
     }
     protected function build_tree(array $flatList)
     {

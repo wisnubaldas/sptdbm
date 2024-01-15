@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Menu;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class MenuSeeder extends Seeder
 {
     /**
@@ -12,6 +15,7 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->make_menu_rbac();
         Menu::insert([
             [
                 'parent_id'=>0,
@@ -21,7 +25,7 @@ class MenuSeeder extends Seeder
                 'badge'=>10,
                 'active'=>false,
                 'right_icon'=>'',
-                'path'=>'javascript:;'
+                'path'=>'/'
             ],
             [
                 'parent_id'=>0,
@@ -332,7 +336,7 @@ class MenuSeeder extends Seeder
                 'badge'=>10,
                 'active'=>false,
                 'right_icon'=>'',
-                'path'=>'javascript:;'
+                'path'=>'/custom/abandon'
             ],
             [
                 'parent_id'=>30,
@@ -342,7 +346,7 @@ class MenuSeeder extends Seeder
                 'badge'=>10,
                 'active'=>false,
                 'right_icon'=>'',
-                'path'=>'javascript:;'
+                'path'=>'/custom/carrent-now'
             ],
             [
                 'parent_id'=>30,
@@ -352,7 +356,7 @@ class MenuSeeder extends Seeder
                 'badge'=>10,
                 'active'=>false,
                 'right_icon'=>'',
-                'path'=>'javascript:;'
+                'path'=>'/custom/custom-module'
             ],
             [
                 'parent_id'=>30,
@@ -365,5 +369,16 @@ class MenuSeeder extends Seeder
                 'path'=>'javascript:;'
             ],
         ]);
+
+    }
+    protected function make_menu_rbac(){
+
+        $role = Role::create(['name' => 'custom']);
+        $menuPermission = [1,30,31,32,33,34,35];
+        for ($i=0; $i < count($menuPermission); $i++) { 
+            $permission = Permission::create(['name' => $menuPermission[$i]]);
+            $role->givePermissionTo($permission);
+            $permission->assignRole($role);
+        }
     }
 }
