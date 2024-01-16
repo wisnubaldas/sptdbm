@@ -26,7 +26,11 @@
         <div class="login login-v2 fw-bold">
 
             <div class="login-cover">
-                <div class="login-cover-img" style="background-image: url(../assets/img/login-bg/login-bg-17.jpg)"
+                @php
+                    $bg_array = ['login-bg-19','login-bg-20','login-bg-21','login-bg-22','login-bg-23','login-bg-24','login-bg-25'];
+                    $bg = $bg_array[array_rand($bg_array,1)];
+                @endphp
+                <div class="login-cover-img" style="background-image: url(../assets/img/login-bg/{{$bg}}.jpg)"
                     data-id="login-cover-image"></div>
                 <div class="login-cover-bg"></div>
             </div>
@@ -94,26 +98,7 @@
         </div>
 
 
-        <div class="login-bg-list clearfix">
-            <div class="login-bg-list-item active"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-17.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-17.jpg)"></a></div>
-            <div class="login-bg-list-item"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-16.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-16.jpg)"></a></div>
-            <div class="login-bg-list-item"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-15.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-15.jpg)"></a></div>
-            <div class="login-bg-list-item"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-14.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-14.jpg)"></a></div>
-            <div class="login-bg-list-item"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-13.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-13.jpg)"></a></div>
-            <div class="login-bg-list-item"><a href="javascript:;" class="login-bg-list-link"
-                    data-toggle="login-change-bg" data-img="../assets/img/login-bg/login-bg-12.jpg"
-                    style="background-image: url(../assets/img/login-bg/login-bg-12.jpg)"></a></div>
-        </div>
+        
 
 
         
