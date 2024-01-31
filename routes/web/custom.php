@@ -16,6 +16,7 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
     });
     Route::prefix('carrent-now')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\CarrentNowController::class,'index'])->name('carrent-now');
+        Route::get('/get-data-current-now',[\App\Http\Controllers\Custom\CarrentNowController::class,'get_data_carrent_now'])->name('custom.carnow.get-data');
     });
     Route::prefix('custom-module')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\CustomModuleController::class,'index'])->name('custom-module');

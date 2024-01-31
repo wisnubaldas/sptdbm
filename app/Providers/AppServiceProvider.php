@@ -12,7 +12,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(\App\UseCase\GateInOutDatatablesUseCaseInterface::class,\App\UseCase\GateInOutDatatablesUseCase::class);         
+        $this->app->singleton(
+            \App\UseCase\GateInOutDatatablesUseCaseInterface::class,
+            \App\UseCase\GateInOutDatatablesUseCase::class
+        );
+        $this->app->singleton(
+            \App\UseCase\MasterDataUseCaseInterface::class,
+            \App\UseCase\MasterDataUseCase::class
+        );
     }
 
     /**

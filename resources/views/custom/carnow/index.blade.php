@@ -11,7 +11,7 @@
     <div class="panel">
         <div class="panel-body">
             <div class="panel-loader"></div>
-            <form action="{{ route('custom.inventory.find-data') }}" method="post">
+            <form action="{{ route('custom.carnow.get-data') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6 p-4">
@@ -24,7 +24,10 @@
                             <div class="col-lg-8">
                                 <div class="input-group">
                                     <select class="default-select2 form-control" name="search_by" style="width: 100%">
-
+                                        <option selected>Select Type</option>
+                                        @foreach ($master->select_search() as $item)
+                                            <option value="{{$item->id}}">{{$item->text}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -70,6 +73,62 @@
 
         </div>
     </div>
+    
+    {{-- form modal --}}
+    <div class="modal fade" id="modal-dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Form Penegahan</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="mawb" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Master Airway Bill
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="consignee" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Consignee
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="hawb" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Host Airway Bill
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="petugas" required/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Nama Petugas Penegahaan
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="">Alasan Penegahan</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                
+              
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+              <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
 @endsection
 
 @push('js')
@@ -81,8 +140,9 @@
     <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
+
         $(document).ready(function() {
-            let dInOut = {{ Js::from(route('custom.inventory.get-data')) }};
+            let dInOut = {{ Js::from(route('custom.carnow.get-data')) }};
             $('#myTable').DataTable({
                 responsive: true,
                 serverSide: true,
@@ -237,6 +297,22 @@
                         "orderable": true,
                         "searchable": true
                     },
+                    {
+                        "data": "no_bl_awb",
+                        "title": "Fitur Penegahaan",
+                        "orderable": false,
+                        "searchable": false,
+                        "render": function ( data, type, row ) {
+                            // console.log(row);
+                            $('#consignee').val(row.consignee)
+                            $('#hawb').val(row.no_bl_awb)
+                            $('#mawb').val(row.no_master_bl_awb)
+                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple ">
+                                            <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
+                                    </a>`
+                            return x;
+                        }
+                    },
 
 
                 ]
@@ -254,46 +330,8 @@
                 $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
                     "DD/MM/yyyy"));
             });
-            let dataSelect = [{
-                    id: 'ref_num',
-                    text: 'Refrensi Number'
-                },
-                {
-                    id: 'wk_inout',
-                    text: 'Waktu Gate In Out'
-                },
-                {
-                    id: 'no_daftar_pabean',
-                    text: 'No Pendaftaran'
-                },
-                {
-                    id: 'no_bc11',
-                    text: 'BC 11'
-                },
-                {
-                    id: 'tgl_bc11',
-                    text: 'Tanggal BC 11'
-                },
-                {
-                    id: 'no_master_bl_awb',
-                    text: 'MAWB'
-                },
-                {
-                    id: 'no_bl_awb',
-                    text: 'HAWB'
-                },
-                {
-                    id: 'consignee',
-                    text: 'Consignee'
-                },
-                {
-                    id: 'nm_angkut',
-                    text: 'Sarana Angkut'
-                },
-            ]
-            $(".default-select2").select2({
-                data: dataSelect
-            });
+            
+            $(".default-select2").select2();
         });
     </script>
 @endpush

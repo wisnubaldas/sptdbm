@@ -11,4 +11,5 @@ namespace App\UseCase;
 interface GateInOutDatatablesUseCaseInterface
 {
     public function make_tables();
+    public function carnow_tables();
 }

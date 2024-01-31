@@ -11,7 +11,7 @@
     <div class="panel">
         <div class="panel-body">
             <div class="panel-loader"></div>
-            <form action="{{ route('custom.inventory.find-data') }}" method="post">
+            <form action="{{ route('custom.carnow.get-data') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6 p-4">
@@ -24,9 +24,32 @@
                             <div class="col-lg-8">
                                 <div class="input-group">
                                     <select class="default-select2 form-control" name="search_by" style="width: 100%">
-
+                                        <option selected>Select Type</option>
+                                        @foreach ($master->select_search() as $item)
+                                            <option value="{{$item->id}}">{{$item->text}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-group row pt-4">
+                                <label class="form-label col-form-label col-lg-4">Change Type</label>
+                                <div class="col-lg-8">
+                                    <div class="form-check mb-2 form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" value="export" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Export
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2 form-check-inline">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" value="import">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Import
+                                        </label>
+                                    </div>
+                                </div>
+    
                             </div>
                         </div>
                         <div class="form-group row pt-4">
@@ -45,45 +68,6 @@
         <div class="panel-body">
             <div class="modal-content">
                 <table id="myTable" class="table table-striped table-bordered align-middle" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th  align="center">No</th>
-                            <th  align="center">Kode Tps</th>
-                            <th  align="center">Nama Angkut</th>
-                            <th  align="center">No. Voy/Flight</th>
-                            <th  align="center">Tgl. Tiba</th>
-                            <th  align="center">Kode Gudang</th>
-                            <th  align="center">Reff Number</th>
-                            <th  align="center">No. BL/Awb</th>
-                            <th  align="center">Tgl. BL/Awb</th>
-                            <th  align="center">No. Master BL/Awb</th>
-                            <th  align="center">Tgl. Master BL/Awb</th>
-                            <th  align="center">Id Consignee</th>
-                            <th  align="center">Consignee</th>
-                            <th  align="center">Bruto (Kg)</th>
-                            <th  align="center">Kode Kemasan</th>
-                            <th  align="center">Jumlah Kemasan</th>
-                            <th  align="center">Kd. Dok Inout</th>
-                            <th  align="center">No. Dok Inout</th>
-                            <th  align="center">Tgl. Dok Inout</th>
-                            <th  align="center">Wk Inout</th>
-                            <th  align="center">No. Pol.</th>
-                            <th  align="center">No. Bc11</th>
-                            <th  align="center">Tgl. Bc11</th>
-                            <th  align="center">No. Pos Bc11</th>
-                            <th  align="center">Pel. Muat</th>
-                            <th  align="center">Pel. Transit</th>
-                            <th  align="center">Pel. Bongkar</th>
-                            <th  align="center">Nomor Daftar Pabean</th>
-                            <th  align="center">Tgl. Daftar Pabean</th>
-                            <th  align="center">No. Segel Bc</th>
-                            <th  align="center">Tgl. Segel Bc</th>
-                            <th  align="center">Status</th>
-                            <th  align="center">Fitur Penegahan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
                 </table>
             </div>
 
@@ -108,6 +92,7 @@
                 processing: true,
                 deferRender: true,
                 ajax: dInOut,
+                columns:custom.fieldTable
             });
 
             $("#default-daterange").daterangepicker({

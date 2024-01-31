@@ -1,6 +1,7 @@
 @extends('template.index')
 
 @section('content')
+
 <div>
 
     <ol class="breadcrumb float-xl-end">

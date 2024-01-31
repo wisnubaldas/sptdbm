@@ -44,6 +44,7 @@
     <script src="{{asset('/assets/js/vendor.min.js')}}"></script>
     <script src="{{asset('/assets/js/app.min.js')}}"></script>
     <script src="{{asset('/assets/js/theme/default.min.js')}}"></script>
+    <script src="{{asset('/assets/js/custom.js')}}"></script>
     <script>
         //set active menunya ngga usah ribet
         $(document).ready(function(){
