@@ -8,71 +8,104 @@
     </ol>
 
     <h1 class="page-header">Custom Module  <small>Import/Export </small></h1>
-    <div class="panel">
-        <div class="panel-body">
-            <div class="panel-loader"></div>
-            <form action="{{ route('custom.carnow.get-data') }}" method="post">
-                @csrf
-                <div class="row">
-                    <div class="col-6 p-4">
-                        <div class="form-group row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <textarea name="search_by_val" id="search_by_val" cols="20" rows="10" style="width: 100%"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="input-group">
-                                    <select class="default-select2 form-control" name="search_by" style="width: 100%">
-                                        <option selected>Select Type</option>
-                                        @foreach ($master->select_search() as $item)
-                                            <option value="{{$item->id}}">{{$item->text}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row pt-4">
-                                <label class="form-label col-form-label col-lg-4">Change Type</label>
-                                <div class="col-lg-8">
-                                    <div class="form-check mb-2 form-check-inline">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1" value="export" checked>
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Export
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2 form-check-inline">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1" value="import">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Import
-                                        </label>
-                                    </div>
-                                </div>
-    
-                            </div>
-                        </div>
-                        <div class="form-group row pt-4">
-                            <div class="btn btn-group">
-                                <button class="btn btn-success" type="submit">Submit</button>
-                                <button class="btn btn-warning" type="button">Export Excel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+    <ul class="nav nav-tabs " id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">EXPORT</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">IMPORT</a>
+        </li>
+    </ul>
+    <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <x-form-search action="{{ route('custom.inventory.find-data') }}" />
         </div>
-
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <x-form-search action="#" />
+        </div>
     </div>
-    <div class="panel panel-inverse">
+    <div class="panel panel-inverse p-2">
+        <div class="panel-heading panel-heading bg-cyan-700 text-white">
+            <h4 class="panel-title">Data Inventory</h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"
+                    data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
+                        class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                        class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
+                        class="fa fa-times"></i></a>
+            </div>
+        </div>
         <div class="panel-body">
             <div class="modal-content">
-                <table id="myTable" class="table table-striped table-bordered align-middle" style="width: 100%">
-                </table>
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-striped table-bordered align-middle display nowrap"
+                        style="width: 100%">
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
+    
+    {{-- form modal --}}
+    <div class="modal fade" id="modal-dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Form Penegahan</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="mawb" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Master Airway Bill
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="consignee" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Consignee
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="hawb" readonly/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Host Airway Bill
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control fs-15px" id="petugas" required/>
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
+                              Nama Petugas Penegahaan
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="">Alasan Penegahan</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                
+              
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+              <button class="btn btn-success" type="submit">Submit</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
 @endsection
 
 @push('js')
@@ -85,14 +118,49 @@
     <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $('#myTab a').on('click', function(e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
             let dInOut = {{ Js::from(route('custom.inventory.get-data')) }};
             $('#myTable').DataTable({
-                responsive: true,
+                responsive: false,
                 serverSide: true,
                 processing: true,
-                deferRender: true,
+                scrollX: true,
                 ajax: dInOut,
-                columns:custom.fieldTable
+                columns: custom.fieldTable.concat([{
+                        "data": "no_bl_awb",
+                        "title": "Fitur Penegahaan",
+                        "orderable": false,
+                        "searchable": false,
+                        "render": function ( data, type, row ) {
+                            // console.log(row);
+                            $('#consignee').val(row.consignee)
+                            $('#hawb').val(row.no_bl_awb)
+                            $('#mawb').val(row.no_master_bl_awb)
+                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple btn-sm ">
+                                            <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
+                                    </a>`
+                            return x;
+                        }
+                    },
+                    {
+                        "data": "no_bl_awb",
+                        "title": "Fitur Release",
+                        "orderable": false,
+                        "searchable": false,
+                        "render": function ( data, type, row ) {
+                            // console.log(row);
+                            $('#consignee').val(row.consignee)
+                            $('#hawb').val(row.no_bl_awb)
+                            $('#mawb').val(row.no_master_bl_awb)
+                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-success btn-sm ">
+                                            <i class="fas fa-lg fa-fw fa-handshake"></i> Relase
+                                    </a>`
+                            return x;
+                        }
+                    }])
             });
 
             $("#default-daterange").daterangepicker({

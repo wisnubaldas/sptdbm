@@ -18,7 +18,7 @@ class GateInOutDatatablesUseCase implements GateInOutDatatablesUseCaseInterface
     "id_consignee", "consignee", "bruto", "kd_kem","jml_kem", "kd_dok_inout",
     "no_dok_inout", "tgl_dok_inout", "wk_inout","no_pol",
     "no_bc11", "tgl_bc11", "no_pos_bc11", "pel_muat", "pel_transit","pel_bongkar",
-     "no_daftar_pabean", "tgl_daftar_pabean", "no_segel_bc");
+     "no_daftar_pabean", "tgl_daftar_pabean", "no_segel_bc","tg_segel_bc");
     public function make_tables()
     {
         $first = GateExpIn::select($this->fillable)->where(['flag_gateout'=>1]);

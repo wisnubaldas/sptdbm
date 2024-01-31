@@ -1,173 +1,196 @@
 let custom = {
     fieldTable: [{
         "data": "kd_tps",
-        "title": "Kode TPS",
+        "title": "KD TPS",
         "orderable": true,
         "searchable": true
     },
     {
         "data": "nm_angkut",
-        "title": "Nama Angkut",
+        "title": "NAMA PENGANGKUT",
         "orderable": true,
         "searchable": true
     },
     {
         "data": "no_voy_flight",
-        "title": "Flight No",
+        "title": "NO VOY/FLIGHT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tg_tiba",
-        "title": "Tgl Tiba",
+        "title": "TGL TIBA",
         "orderable": true,
         "searchable": true
     }, {
         "data": "kd_gudang",
-        "title": "Kd Gudang",
+        "title": "KD GUDANG",
         "orderable": true,
         "searchable": true
     }, {
         "data": "ref_num",
-        "title": "Refnumber",
+        "title": "REF NUMBER",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_bl_awb",
-        "title": "AWB",
+        "title": "NO BL/AWB",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tgl_bl_awb",
-        "title": "TGL AWB",
+        "title": "TGL BL/AWB",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_master_bl_awb",
-        "title": "MAWB",
+        "title": "NO MASTER BL/AWB",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tgl_master_bl_awb",
-        "title": "Tgl MAWB",
+        "title": "TGL MASTER BL/AWB",
         "orderable": true,
         "searchable": true
     }, {
         "data": "id_consignee",
-        "title": "Id Consignee",
+        "title": "ID CONSIGNEE",
         "orderable": true,
         "searchable": true
     }, {
         "data": "consignee",
-        "title": "Consignee",
+        "title": "CONSIGNEE",
         "orderable": true,
         "searchable": true
     }, {
         "data": "bruto",
-        "title": "Bruto",
+        "title": "BRUTO",
         "orderable": true,
         "searchable": true
     }, {
         "data": "kd_kem",
-        "title": "Kd Kemasan",
+        "title": "KODE KEMASAN",
         "orderable": true,
         "searchable": true
     }, {
         "data": "jml_kem",
-        "title": "Jml Kemasan",
+        "title": "JUMLAH KEMASAN",
         "orderable": true,
         "searchable": true
     }, {
         "data": "kd_dok_inout",
-        "title": "Kd Dok Inout",
+        "title": "KD DOK INOUT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_dok_inout",
-        "title": "Dok Inout",
+        "title": "NO DOK INOUT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tgl_dok_inout",
-        "title": "Tgl Inout",
+        "title": "TGL DOK INOUT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "wk_inout",
-        "title": "Waktu Inout",
+        "title": "WAKTU INOUT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_pol",
-        "title": "No Pol",
+        "title": "NO POLISI",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_bc11",
-        "title": "No BC11",
+        "title": "NO BC1.1",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tgl_bc11",
-        "title": "Tgl BC11",
+        "title": "TGL BC1.1",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_pos_bc11",
-        "title": "No Pos BC11",
+        "title": "NO POS BC1.1",
         "orderable": true,
         "searchable": true
     }, {
         "data": "pel_muat",
-        "title": "Pelabuhan Muat",
+        "title": "PEL MUAT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "pel_transit",
-        "title": "Pelabuhan Transit",
+        "title": "PEL TRANSIT",
         "orderable": true,
         "searchable": true
     }, {
         "data": "pel_bongkar",
-        "title": "Pelabuhan Bongkar",
+        "title": "PEL BONGKAR",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_daftar_pabean",
-        "title": "No Daftar Pabean",
+        "title": "NO DAFTAR PABEAN",
         "orderable": true,
         "searchable": true
     }, {
         "data": "tgl_daftar_pabean",
-        "title": "Tgl Daftar Pabean",
+        "title": "TGL DAFTAR PABEAN",
         "orderable": true,
         "searchable": true
     }, {
         "data": "no_segel_bc",
-        "title": "No Segel",
+        "title": "NO SEGEL BC",
+        "orderable": true,
+        "searchable": true
+    },{
+        "data": "tg_segel_bc",
+        "title": "TGL SEGEL BC",
         "orderable": true,
         "searchable": true
     },
+    
+    ],
+    selectSearch: [
     {
-        "data": "no_bl_awb",
-        "title": "Fitur Penegahaan",
-        "orderable": false,
-        "searchable": false,
-        "render": function (data, type, row) {
-            // console.log(row);
-            $('#consignee').val(row.consignee)
-            $('#hawb').val(row.no_bl_awb)
-            $('#mawb').val(row.no_master_bl_awb)
-            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple ">
-                            <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
-                    </a>`
-            return x;
-        }
+        id:'',
+        text:'Pilih Parameter Pencarian',
+        selected:true
     },
-
-
-    ]
+    {
+        id: 'no_bc11',
+        text: 'Nomor BC 1.1'
+    },
+    {
+        id: 'wk_inout',
+        text: 'Waktu Gate In Out'
+    },
+    {
+        id: 'no_daftar_pabean',
+        text: 'No Pendaftaran'
+    },
+    {
+        id: 'ref_num',
+        text: 'Refrensi Number'
+    },
+    {
+        id: 'tgl_bc11',
+        text: 'Tanggal BC 1.1'
+    },
+    {
+        id: 'no_master_bl_awb',
+        text: 'MAWB'
+    },
+    {
+        id: 'no_bl_awb',
+        text: 'HAWB'
+    },
+]
 }
 
 jQuery(function () {
-    
+    // console.log(custom.selectSearch)
 })
