@@ -123,7 +123,7 @@
             $('.submit-tegah').click(function(){
                 let idTegah = $('#hawb').val()
                 console.log($('#'+idTegah))
-                // $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
+                $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
                 $('#'+idTegah).remove();
             })
 
