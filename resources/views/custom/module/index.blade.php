@@ -129,22 +129,7 @@
                 processing: true,
                 scrollX: true,
                 ajax: dInOut,
-                columns: custom.fieldTable.concat([{
-                        "data": "no_bl_awb",
-                        "title": "Fitur Penegahaan",
-                        "orderable": false,
-                        "searchable": false,
-                        "render": function ( data, type, row ) {
-                            // console.log(row);
-                            $('#consignee').val(row.consignee)
-                            $('#hawb').val(row.no_bl_awb)
-                            $('#mawb').val(row.no_master_bl_awb)
-                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple btn-sm ">
-                                            <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
-                                    </a>`
-                            return x;
-                        }
-                    },
+                columns: custom.fieldTable.concat([
                     {
                         "data": "no_bl_awb",
                         "title": "Fitur Release",

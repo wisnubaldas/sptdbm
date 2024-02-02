@@ -100,7 +100,7 @@
             </div>
             <div class="modal-footer">
               <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
-              <button class="btn btn-success" type="submit">Submit</button>
+              <button class="btn btn-success submit-tegah" type="button" >Submit</button>
             </div>
         </form>
           </div>
@@ -120,6 +120,13 @@
     <script>
 
         $(document).ready(function() {
+            $('.submit-tegah').click(function(){
+                let idTegah = $('#hawb').val()
+                console.log($('#'+idTegah))
+                // $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
+                $('#'+idTegah).remove();
+            })
+
             $('#myTab a').on('click', function(e) {
                 e.preventDefault()
                 $(this).tab('show')
@@ -141,7 +148,7 @@
                             $('#consignee').val(row.consignee)
                             $('#hawb').val(row.no_bl_awb)
                             $('#mawb').val(row.no_master_bl_awb)
-                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple btn-sm ">
+                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple btn-sm " id="${row.no_bl_awb}">
                                             <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
                                     </a>`
                             return x;

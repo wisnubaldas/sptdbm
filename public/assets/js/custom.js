@@ -193,4 +193,7 @@ let custom = {
 
 jQuery(function () {
     // console.log(custom.selectSearch)
+    let customApp = {
+        
+    }
 })
