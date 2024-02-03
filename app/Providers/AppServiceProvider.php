@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
             \App\UseCase\MasterDataUseCaseInterface::class,
             \App\UseCase\MasterDataUseCase::class
         );
+        $this->app->singleton(
+            \App\UseCase\ImportGateInOutUseCaseInterface::class,
+            \App\UseCase\ImportGateInOutUseCase::class
+        );
     }
 
     /**

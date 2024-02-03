@@ -9,12 +9,14 @@ use Illuminate\View\Component;
 class FormSearch extends Component
 {
     public $action;
+    public $method;
     /**
      * Create a new component instance.
      */
-    public function __construct($action)
+    public function __construct($action,$method)
     {
         $this->action = $action;
+        $this->method = $method;
     }
 
     /**

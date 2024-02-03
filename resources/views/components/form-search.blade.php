@@ -1,31 +1,26 @@
 <div>
-    <form action="{{ $action }}" method="post">
+    <form action="{{ $action }}" method="{{$method}}" id="frm-serch">
         @csrf
         <div class="row m-3">
             <div class="col-3">
                 <div class="form-floating mb-3 mb-md-0 pb-1">
-                    <input type="text" class="form-control fs-15px" id="floatingInput" placeholder="">
+                    <input name="bc11" type="text" class="form-control fs-15px" id="bc11" placeholder="">
                     <label for="floatingInput" class="d-flex align-items-center fs-13px">No BC 1.1</label>
                 </div>
                 <div class="btn btn-group">
                     <button class="btn btn-primary" type="button">Export PDF</button>
                     <button class="btn btn-warning" type="button">Export Excel</button>
-                    <button class="btn btn-success" type="button">Cari</button>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-3 mb-md-0 pb-1">
-                    <input type="text" class="form-control fs-15px" id="floatingInput" placeholder="">
-                    <label for="floatingInput" class="d-flex align-items-center fs-13px">Waktu Gate In</label>
-                </div>
-                <div class="form-floating mb-3 mb-md-0 pb-1">
-                    <input type="text" class="form-control fs-15px" id="floatingInput" placeholder="">
-                    <label for="floatingInput" class="d-flex align-items-center fs-13px">Waktu Gate Out</label>
+                    <input type="text" class="form-control fs-15px" id="gate-in-date" placeholder="">
+                    <label for="floatingInput" class="d-flex align-items-center fs-13px">Waktu Gate In/Out</label>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-floating mb-3 mb-md-0 pb-1">
-                    <input type="text" class="form-control fs-15px" id="floatingInput" placeholder="">
+                    <input type="text" class="form-control fs-15px" id="no-pabean" placeholder="">
                     <label for="floatingInput" class="d-flex align-items-center fs-13px">Nomor Pendaftaran Pabean</label>
                 </div>
                 <div class="form-floating mb-3 mb-md-0 pb-1">

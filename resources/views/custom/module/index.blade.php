@@ -20,10 +20,10 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="{{ route('custom.inventory.find-data') }}" />
+            <x-form-search action="{{ route('custom.inventory.find-data') }}" method="" />
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <x-form-search action="#" />
+            <x-form-search action="#" method=""/>
         </div>
     </div>
     <div class="panel panel-inverse p-2">
@@ -160,46 +160,7 @@
                 $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
                     "DD/MM/yyyy"));
             });
-            let dataSelect = [{
-                    id: 'ref_num',
-                    text: 'Refrensi Number'
-                },
-                {
-                    id: 'wk_inout',
-                    text: 'Waktu Gate In Out'
-                },
-                {
-                    id: 'no_daftar_pabean',
-                    text: 'No Pendaftaran'
-                },
-                {
-                    id: 'no_bc11',
-                    text: 'BC 11'
-                },
-                {
-                    id: 'tgl_bc11',
-                    text: 'Tanggal BC 11'
-                },
-                {
-                    id: 'no_master_bl_awb',
-                    text: 'MAWB'
-                },
-                {
-                    id: 'no_bl_awb',
-                    text: 'HAWB'
-                },
-                {
-                    id: 'consignee',
-                    text: 'Consignee'
-                },
-                {
-                    id: 'nm_angkut',
-                    text: 'Sarana Angkut'
-                },
-            ]
-            $(".default-select2").select2({
-                data: dataSelect
-            });
+
         });
     </script>
 @endpush

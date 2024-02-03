@@ -2,34 +2,34 @@ let custom = {
     fieldTable: [{
         "data": "kd_tps",
         "title": "KD TPS",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     },
     {
         "data": "nm_angkut",
         "title": "NAMA PENGANGKUT",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     },
     {
         "data": "no_voy_flight",
         "title": "NO VOY/FLIGHT",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "tg_tiba",
         "title": "TGL TIBA",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "kd_gudang",
         "title": "KD GUDANG",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "ref_num",
         "title": "REF NUMBER",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_bl_awb",
@@ -54,7 +54,7 @@ let custom = {
     }, {
         "data": "id_consignee",
         "title": "ID CONSIGNEE",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "consignee",
@@ -64,22 +64,22 @@ let custom = {
     }, {
         "data": "bruto",
         "title": "BRUTO",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "kd_kem",
         "title": "KODE KEMASAN",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "jml_kem",
         "title": "JUMLAH KEMASAN",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "kd_dok_inout",
         "title": "KD DOK INOUT",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_dok_inout",
@@ -99,37 +99,37 @@ let custom = {
     }, {
         "data": "no_pol",
         "title": "NO POLISI",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_bc11",
         "title": "NO BC1.1",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "tgl_bc11",
         "title": "TGL BC1.1",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_pos_bc11",
         "title": "NO POS BC1.1",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "pel_muat",
         "title": "PEL MUAT",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "pel_transit",
         "title": "PEL TRANSIT",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "pel_bongkar",
         "title": "PEL BONGKAR",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_daftar_pabean",
@@ -139,17 +139,17 @@ let custom = {
     }, {
         "data": "tgl_daftar_pabean",
         "title": "TGL DAFTAR PABEAN",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     }, {
         "data": "no_segel_bc",
         "title": "NO SEGEL BC",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     },{
         "data": "tg_segel_bc",
         "title": "TGL SEGEL BC",
-        "orderable": true,
+        "orderable": false,
         "searchable": true
     },
     
@@ -188,10 +188,16 @@ let custom = {
         id: 'no_bl_awb',
         text: 'HAWB'
     },
-]
+    ],
+    showModal:function(e){
+        jQuery(function(){
+           console.log(e)
+        })
+    }
 }
 
 jQuery(function () {
+    
     // console.log(custom.selectSearch)
     let customApp = {
         

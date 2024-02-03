@@ -20,10 +20,10 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="{{ route('custom.inventory.find-data') }}" />
+            <x-form-search action="#" method="#"/>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <x-form-search action="#" />
+            <x-form-search action="#" method="GET" />
         </div>
     </div>
     <div class="panel panel-inverse p-2">
@@ -51,62 +51,6 @@
         </div>
     </div>
     
-    {{-- form modal --}}
-    <div class="modal fade" id="modal-dialog">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Form Penegahan</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="mawb" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Master Airway Bill
-                            </label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="consignee" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Consignee
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="hawb" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Host Airway Bill
-                            </label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="petugas" required/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Nama Petugas Penegahaan
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <label for="">Alasan Penegahan</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                </div>
-                
-              
-            </div>
-            <div class="modal-footer">
-              <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
-              <button class="btn btn-success submit-tegah" type="button" >Submit</button>
-            </div>
-        </form>
-          </div>
-        </div>
-      </div>
-
       @endsection
 
 @push('js')
@@ -117,59 +61,61 @@
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script>
 
         $(document).ready(function() {
-            $('.submit-tegah').click(function(){
-                let idTegah = $('#hawb').val()
-                console.log($('#'+idTegah))
-                $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
-                $('#'+idTegah).remove();
-            })
+           
+
+            // $('.submit-tegah').click(function(){
+            //     let idTegah = $('#hawb').val()
+            //     console.log($('#'+idTegah))
+            //     $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
+            //     $('#'+idTegah).remove();
+            // })
 
             $('#myTab a').on('click', function(e) {
                 e.preventDefault()
                 $(this).tab('show')
             })
-            let dInOut = {{ Js::from(route('custom.carnow.get-data')) }};
-            $('#myTable').DataTable({
-                responsive: false,
-                serverSide: true,
-                processing: true,
-                scrollX: true,
-                ajax: dInOut,
-                columns: custom.fieldTable.concat([{
-                        "data": "no_bl_awb",
-                        "title": "Fitur Penegahaan",
-                        "orderable": false,
-                        "searchable": false,
-                        "render": function ( data, type, row ) {
-                            // console.log(row);
-                            $('#consignee').val(row.consignee)
-                            $('#hawb').val(row.no_bl_awb)
-                            $('#mawb').val(row.no_master_bl_awb)
-                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-purple btn-sm " id="${row.no_bl_awb}">
-                                            <i class="fas fa-lg fa-fw fa-hand-paper"></i> Tegah
-                                    </a>`
-                            return x;
-                        }
-                    }])
+            let dInOut = {{ Js::from($dataTables) }};
+            let tbl = $('#myTable').DataTable({
+                            responsive: false,
+                            serverSide: true,
+                            processing: true,
+                            scrollX: true,
+                            ajax: dInOut,
+                            columns: custom.fieldTable.concat([{
+                                    "data":"status_tegah",
+                                    "title": "Fitur Penegahaan",
+                                    "orderable": false,
+                                    "searchable": false,
+                                }])
+                        });
+
+            $('#bc11').keyup( function() {
+                tbl.search( this.value ).draw();
             });
 
-            $("#default-daterange").daterangepicker({
-                opens: "right",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                startDate: moment().subtract("days", 0),
-                endDate: moment(),
-                minDate: moment().subtract("month", 3),
-                maxDate: "+3M",
-            }, function(start, end) {
-                $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
-                    "DD/MM/yyyy"));
+            $("#gate-in-date").datepicker({
+                todayHighlight: true,
+                autoclose: true
             });
+
+            // $("#default-daterange").daterangepicker({
+            //     opens: "right",
+            //     format: "MM/DD/YYYY",
+            //     separator: " to ",
+            //     startDate: moment().subtract("days", 0),
+            //     endDate: moment(),
+            //     minDate: moment().subtract("month", 3),
+            //     maxDate: "+3M",
+            // }, function(start, end) {
+            //     $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
+            //         "DD/MM/yyyy"));
+            // });
             
-            $(".default-select2").select2();
+            // $(".default-select2").select2();
         });
     </script>
 @endpush
@@ -179,6 +125,7 @@
     <link href="{{ asset('/assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" />
     <link href="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
     <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
         .modal-loader {

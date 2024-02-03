@@ -20,10 +20,10 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="{{ route('custom.inventory.find-data') }}" />
+            <x-form-search action="{{ route('custom.inventory.find-data') }}" method="" />
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <x-form-search action="#" />
+            <x-form-search action="#" method=""/>
         </div>
     </div>
     <div class="panel panel-inverse p-2">
