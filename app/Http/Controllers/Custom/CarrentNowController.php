@@ -29,7 +29,7 @@ class CarrentNowController extends Controller
         $dataTegah = $ImportGateInOut->getDataTegah($awb);
         return view('custom.carnow.form-tegah',compact('dataTegah'));
     }
-    public function post_data_release(Request $request,ImportGateInOutUseCase $ImportGateInOut){
+    public function post_tegah(Request $request,ImportGateInOutUseCase $ImportGateInOut){
         $dataTegah = $ImportGateInOut->getDataTegah($request->hawb);
         $ImportGateInOut->setDataTegah($dataTegah,$request->all());
         return \redirect()->route('carrent-now');
