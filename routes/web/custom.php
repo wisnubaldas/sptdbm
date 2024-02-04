@@ -23,6 +23,9 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
     });
     Route::prefix('custom-module')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\CustomModuleController::class,'index'])->name('custom-module');
+        Route::get('/get-data-release/{awb}', [\App\Http\Controllers\Custom\CustomModuleController::class,'get_data_release'])->name('custom-module.get-release');
+        Route::post('/post-data-release',[\App\Http\Controllers\Custom\CustomModuleController::class,'post_data_release'])->name('custom-module.post-release');
+
     });
     Route::prefix('stock-opname')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\StockOpnameController::class,'index'])->name('stock-opname');        

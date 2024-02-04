@@ -65,26 +65,15 @@
     <script>
 
         $(document).ready(function() {
-           
-
-            // $('.submit-tegah').click(function(){
-            //     let idTegah = $('#hawb').val()
-            //     console.log($('#'+idTegah))
-            //     $('#'+idTegah).parent().html(`<h5 class='text-danger'>Status Tegah</h5>`);
-            //     $('#'+idTegah).remove();
-            // })
-
-            $('#myTab a').on('click', function(e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
-            let dInOut = {{ Js::from($dataTables) }};
+            
+            let dInOut = {{ Js::from(route('carrent-now')) }};
             let tbl = $('#myTable').DataTable({
                             responsive: false,
                             serverSide: true,
                             processing: true,
                             scrollX: true,
                             ajax: dInOut,
+                            order: [ [17, 'desc'] ],
                             columns: custom.fieldTable.concat([{
                                     "data":"status_tegah",
                                     "title": "Fitur Penegahaan",
@@ -93,29 +82,19 @@
                                 }])
                         });
 
-            $('#bc11').keyup( function() {
-                tbl.search( this.value ).draw();
-            });
-
             $("#gate-in-date").datepicker({
                 todayHighlight: true,
-                autoclose: true
+                autoclose: true,
+                format:'yyyymmdd'
             });
 
-            // $("#default-daterange").daterangepicker({
-            //     opens: "right",
-            //     format: "MM/DD/YYYY",
-            //     separator: " to ",
-            //     startDate: moment().subtract("days", 0),
-            //     endDate: moment(),
-            //     minDate: moment().subtract("month", 3),
-            //     maxDate: "+3M",
-            // }, function(start, end) {
-            //     $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
-            //         "DD/MM/yyyy"));
-            // });
-            
-            // $(".default-select2").select2();
+            $('#search-data').on('click',function(a){
+                a.preventDefault()
+                let dataForm = $('#frm-serch').serialize()
+                tbl.ajax.url('?'+dataForm).load()
+                $('#frm-serch')[0].reset();
+            })
+
         });
     </script>
 @endpush

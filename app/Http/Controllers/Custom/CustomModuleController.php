@@ -3,18 +3,26 @@
 namespace App\Http\Controllers\Custom;
 
 use App\Http\Controllers\Controller;
+use App\UseCase\ImportGateInOutUseCase;
 use Illuminate\Http\Request;
-use App\UseCase\GateInOutDatatablesUseCase;
-use App\UseCase\MasterDataUseCase;
 class CustomModuleController extends Controller
 {
     protected $InOutData;
-    public function __construct(GateInOutDatatablesUseCase $InOutData,MasterDataUseCase $master){
+    public function __construct(){
         $this->middleware('auth');
-        $this->InOutData = $InOutData;
-        $this->masterData = $master;
     }
-    public function index() {
-        return view('custom.module.index',['master'=>$this->masterData]);
+    public function index(Request $request, ImportGateInOutUseCase $importGateInOut) {
+        if($request->ajax()){
+            return $importGateInOut->getCustomModule();
+        }
+        return view('custom.module.index');
+    }
+    public function get_data_release($awb,ImportGateInOutUseCase $importGateInOut){
+        $data = $importGateInOut->getDataRelease($awb);
+        return view('custom.module.form-data-release',compact('data'));
+    }
+    public function post_data_release(Request $request,ImportGateInOutUseCase $ImportGateInOut){
+        $ImportGateInOut->setDataRelease($request);
+        return \redirect()->route('custom-module');
     }
 }

@@ -20,7 +20,7 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="{{ route('custom.inventory.find-data') }}" method="" />
+            <x-form-search action="#" method="" />
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <x-form-search action="#" method=""/>
@@ -51,61 +51,6 @@
         </div>
     </div>
     
-    {{-- form modal --}}
-    <div class="modal fade" id="modal-dialog">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Form Penegahan</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="mawb" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Master Airway Bill
-                            </label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="consignee" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Consignee
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="hawb" readonly/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Host Airway Bill
-                            </label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control fs-15px" id="petugas" required/>
-                            <label for="floatingInput" class="d-flex align-items-center fs-13px">
-                              Nama Petugas Penegahaan
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <label for="">Alasan Penegahan</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                </div>
-                
-              
-            </div>
-            <div class="modal-footer">
-              <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
-              <button class="btn btn-success" type="submit">Submit</button>
-            </div>
-        </form>
-          </div>
-        </div>
-      </div>
 @endsection
 
 @push('js')
@@ -118,48 +63,34 @@
     <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#myTab a').on('click', function(e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
-            let dInOut = {{ Js::from(route('custom.inventory.get-data')) }};
-            $('#myTable').DataTable({
+            let dInOut = {{ Js::from(route('custom-module')) }};
+            let tbl = $('#myTable').DataTable({
                 responsive: false,
                 serverSide: true,
                 processing: true,
                 scrollX: true,
                 ajax: dInOut,
-                columns: custom.fieldTable.concat([
-                    {
-                        "data": "no_bl_awb",
-                        "title": "Fitur Release",
-                        "orderable": false,
-                        "searchable": false,
-                        "render": function ( data, type, row ) {
-                            // console.log(row);
-                            $('#consignee').val(row.consignee)
-                            $('#hawb').val(row.no_bl_awb)
-                            $('#mawb').val(row.no_master_bl_awb)
-                            let x = `<a href="#modal-dialog" data-bs-toggle="modal" class="btn btn-success btn-sm ">
-                                            <i class="fas fa-lg fa-fw fa-handshake"></i> Relase
-                                    </a>`
-                            return x;
-                        }
-                    }])
+                order: [ [17, 'desc'] ],
+                columns: custom.fieldTable.concat([{
+                                                        "data":"status_tegah",
+                                                        "title": "Fitur Penegahaan",
+                                                        "orderable": false,
+                                                        "searchable": false,
+                                                    },
+                                                    {
+                                                        "data":"status_release",
+                                                        "title": "Fitur Release",
+                                                        "orderable": false,
+                                                        "searchable": false,
+                                                    },])
             });
 
-            $("#default-daterange").daterangepicker({
-                opens: "right",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                startDate: moment().subtract("days", 0),
-                endDate: moment(),
-                minDate: moment().subtract("month", 3),
-                maxDate: "+3M",
-            }, function(start, end) {
-                $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
-                    "DD/MM/yyyy"));
-            });
+            $('#search-data').on('click',function(a){
+                a.preventDefault()
+                let dataForm = $('#frm-serch').serialize()
+                tbl.ajax.url('?'+dataForm).load()
+                $('#frm-serch')[0].reset();
+            })
 
         });
     </script>

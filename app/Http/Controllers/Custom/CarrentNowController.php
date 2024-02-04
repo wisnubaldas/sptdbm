@@ -15,20 +15,21 @@ class CarrentNowController extends Controller
         $this->middleware('auth');
         $this->masterData = $master;
     }
-    public function index() {
-        
-        $dataTables = route('custom.carnow.get-data');
-        return view('custom.carnow.index',['master'=>$this->masterData,'dataTables'=>$dataTables]);
+    public function index(Request $request,ImportGateInOutUseCase $data) {
+        if($request->ajax()){
+            return $data->getCurrentNow($request);
+        }     
+        return view('custom.carnow.index',['master'=>$this->masterData]);
     }
     
-    public function get_data_carrent_now(ImportGateInOutUseCase $data){
-         return $data->getCurrentNow($this->customRequest);
-    }
+    // public function get_data_carrent_now(ImportGateInOutUseCase $data){
+    //      return $data->getCurrentNow($this->customRequest);
+    // }
     public function get_data_tegah($awb,ImportGateInOutUseCase $ImportGateInOut){
         $dataTegah = $ImportGateInOut->getDataTegah($awb);
         return view('custom.carnow.form-tegah',compact('dataTegah'));
     }
-    public function post_tegah(Request $request,ImportGateInOutUseCase $ImportGateInOut){
+    public function post_data_release(Request $request,ImportGateInOutUseCase $ImportGateInOut){
         $dataTegah = $ImportGateInOut->getDataTegah($request->hawb);
         $ImportGateInOut->setDataTegah($dataTegah,$request->all());
         return \redirect()->route('carrent-now');
