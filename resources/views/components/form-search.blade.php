@@ -41,3 +41,19 @@
         </div>
     </form>
 </div>
+@push('js')
+<script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $("#gate-in-date").datepicker({
+                todayHighlight: true,
+                autoclose: true,
+                format:'yyyymmdd',
+                orientation: "bottom left"
+            });
+    })
+</script>
+@endpush
+@push('css')
+<link href="{{ asset('/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
+@endpush

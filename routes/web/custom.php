@@ -8,8 +8,10 @@ use PHPUnit\Framework\Attributes\Group;
 Route::prefix('custom')->middleware(['web','auth'])->group(function () {
     Route::prefix('inventory')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\InventoryController::class,'index']);
-        Route::get('/get-data', [\App\Http\Controllers\Custom\InventoryController::class,'get_data'])->name('custom.inventory.get-data');
-        Route::match(['get', 'post'],'/find-data', [\App\Http\Controllers\Custom\InventoryController::class,'find_data'])->name('custom.inventory.find-data');
+        Route::get('/get-data-in', [\App\Http\Controllers\Custom\InventoryController::class,'get_data_in'])->name('inventory.get_data_in');
+        Route::get('/get-data-out', [\App\Http\Controllers\Custom\InventoryController::class,'get_data_out'])->name('inventory.get_data_out');
+        Route::get('/get-export-in', [\App\Http\Controllers\Custom\InventoryController::class,'export_in'])->name('inventory.export_in');
+        Route::get('/get-export-out', [\App\Http\Controllers\Custom\InventoryController::class,'export_out'])->name('inventory.export_out');
     });
     Route::prefix('abandon')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\AbandonController::class,'index'])->name('abandon');

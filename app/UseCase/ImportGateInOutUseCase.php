@@ -198,4 +198,52 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ]
         );
     }
+
+    // data inventory
+    public function getDataInInventory($request){
+        $query = GateImportIn::query();
+        return DataTables::of($query)
+            ->filter(function ($query){
+                if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
+                    $query->where('no_bl_awb', request('no_bl_awb'));
+                }
+                if (request()->has('no_bc11') && request()->filled('no_bc11')) {
+                    $query->where('no_bc11', request('no_bc11'));
+                }
+                if (request()->has('no_daftar_pabean') && request()->filled('no_daftar_pabean')) {
+                    $query->where('no_daftar_pabean', request('no_daftar_pabean'));
+                }
+                if (request()->has('no_master_bl_awb') && request()->filled('no_master_bl_awb')) {
+                    $query->where('no_master_bl_awb', request('no_master_bl_awb'));
+                }
+                if (request()->has('wk_inout') && request()->filled('wk_inout')) {
+                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                }
+            })
+            ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
+            ->make(true);
+    }
+    public function getDataOutInventory($request){
+        return DataTables::of(GateImportOut::query())
+            ->filter(function ($query){
+                if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
+                    $query->where('no_bl_awb', request('no_bl_awb'));
+                }
+                if (request()->has('no_bc11') && request()->filled('no_bc11')) {
+                    $query->where('no_bc11', request('no_bc11'));
+                }
+                if (request()->has('no_daftar_pabean') && request()->filled('no_daftar_pabean')) {
+                    $query->where('no_daftar_pabean', request('no_daftar_pabean'));
+                }
+                if (request()->has('no_master_bl_awb') && request()->filled('no_master_bl_awb')) {
+                    $query->where('no_master_bl_awb', request('no_master_bl_awb'));
+                }
+                if (request()->has('wk_inout') && request()->filled('wk_inout')) {
+                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                }
+            })
+            ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
+            ->make(true);
+    }
+
 }

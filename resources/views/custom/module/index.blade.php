@@ -59,8 +59,6 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('custom-module')) }};
@@ -91,6 +89,7 @@
                 tbl.ajax.url('?'+dataForm).load()
                 $('#frm-serch')[0].reset();
             })
+            
 
         });
     </script>
@@ -100,8 +99,6 @@
     <link href="{{ asset('/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
         .modal-loader {
             background: rgba(255, 255, 255, 0.85);

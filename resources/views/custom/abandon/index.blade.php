@@ -20,7 +20,7 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="{{ route('custom.inventory.find-data') }}" method="" />
+            <x-form-search action="#" method="" />
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <x-form-search action="#" method=""/>
@@ -66,7 +66,7 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
-            let dInOut = {{ Js::from(route('custom.inventory.get-data')) }};
+            let dInOut = null;
             $('#myTable').DataTable({
                 responsive: false,
                 serverSide: true,
