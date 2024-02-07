@@ -7,7 +7,7 @@ use \App\Models\TpsOnline\GateImportIn;
 use \App\Models\TpsOnline\GateImportOut;
 use \App\Models\TpsOnline\AutoPenegahan;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 /**
  * Class UseCase.
  *
@@ -245,5 +245,29 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
             ->make(true);
     }
+    public function abandonImportIn($request){
+        $date = Carbon::now()->subDays(30);
+        return DataTables::of(GateImportIn::query()->where( 'tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout',6))
+            ->filter(function ($query){
+                if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
+                    $query->where('no_bl_awb', request('no_bl_awb'));
+                }
+                if (request()->has('no_bc11') && request()->filled('no_bc11')) {
+                    $query->where('no_bc11', request('no_bc11'));
+                }
+                if (request()->has('no_daftar_pabean') && request()->filled('no_daftar_pabean')) {
+                    $query->where('no_daftar_pabean', request('no_daftar_pabean'));
+                }
+                if (request()->has('no_master_bl_awb') && request()->filled('no_master_bl_awb')) {
+                    $query->where('no_master_bl_awb', request('no_master_bl_awb'));
+                }
+                if (request()->has('wk_inout') && request()->filled('wk_inout')) {
+                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                }
+            })
+            ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
+            ->make(true);
+    }
+    
 
 }

@@ -82,8 +82,6 @@
     <script src="{{ asset('/assets/plugins/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
         // global variablenya
         let propData = {
@@ -183,8 +181,6 @@
         rel="stylesheet" />
     <link href="{{ asset('/assets/plugins/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
         td.highlight {
             background-color: #e9ecef !important;

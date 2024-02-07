@@ -7,48 +7,45 @@
         <li class="breadcrumb-item active">index</li>
     </ol>
 
-    <h1 class="page-header">Abandon   <small> Barang Timbun Lewat 30 Hari</small></h1>
+    <h1 class="page-header">Abandon <small> Barang Timbun Lewat 30 Hari</small></h1>
     <ul class="nav nav-tabs " id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">EXPORT</a>
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#IMPORT" role="tab" aria-controls="IMPORT"
+                aria-selected="true">IMPORT</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">IMPORT</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#IMPORT" role="tab" aria-controls="IMPORT"
+                aria-selected="false">EXPORT</a>
         </li>
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="#" method="" />
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <x-form-search action="#" method=""/>
-        </div>
-    </div>
-    <div class="panel panel-inverse p-2">
-        <div class="panel-heading panel-heading bg-cyan-700 text-white">
-            <h4 class="panel-title">Data Inventory</h4>
-            <div class="panel-heading-btn">
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"
-                    data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-expand"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
-                        class="fa fa-redo"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
-                        class="fa fa-minus"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
-                        class="fa fa-times"></i></a>
+        <x-form-search action="#" method="" />
+        {{-- panel table IN --}}
+        <div class="panel panel-inverse">
+            <div class="panel-heading panel-heading bg-red-700 text-white">
+                <h4 class="panel-title fw-bold">Data Abandon</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"
+                        data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
+                            class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                            class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
+                            class="fa fa-times"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="panel-body">
-            <div class="modal-content">
-                <div class="table-responsive">
-                    <table id="myTable" class="table table-striped table-bordered align-middle display nowrap"
-                        style="width: 100%">
-                    </table>
+            <div class="panel-body">
+                <div class="modal-content">
+                    <div class="table-responsive">
+                        <table id="tbl-gatein" class="table table-striped table-bordered align-middle display nowrap"
+                            style="width: 100%">
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 
@@ -58,76 +55,59 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script>
+        let propData = {
+            tab: 'IMPORT',
+            searchable: function(tblGateIn, tblGateOut, importIn, importOut, exportIn, exportOut) {
+                $('#search-data').on('click', function(a) {
+                    a.preventDefault()
+                    let dataForm = $('#frm-serch').serialize()
+                    if (propData.tab == 'IMPORT') {
+                        // console.log(propData.tab);
+                        tblGateIn.ajax.url(importIn + '?' + dataForm).load()
+                    } else {
+                        // console.log(propData.tab);
+                        tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
+                    }
+                    $('#frm-serch')[0].reset();
+                })
+            }
+        }
         $(document).ready(function() {
-            $('#myTab a').on('click', function(e) {
-                e.preventDefault()
-                $(this).tab('show')
-            })
-            let dInOut = null;
-            $('#myTable').DataTable({
+            let importIn = {{ Js::from(route('abandon.import-in')) }};
+            let exportIn = {{ Js::from(route('abandon.export-in')) }};
+
+            let tblGateIn = $('#tbl-gatein').DataTable({
+                // deferLoading: 57,
+                lengthChange: false,
+                searching: false,
                 responsive: false,
                 serverSide: true,
                 processing: true,
                 scrollX: true,
-                ajax: dInOut,
+                ajax: importIn,
                 columns: custom.fieldTable
             });
+            $('#myTab a').on('click', function(e) {
+                // e.preventDefault()
+                $(this).tab('show')
+            })
+            $('#myTab a').on('shown.bs.tab', function(e) {
+                // console.log(e.target.innerText)
+                // console.log(e.relatedTarget);
+                switch (e.target.innerText) {
+                    case 'IMPORT':
+                        propData.tab = 'IMPORT'
+                        tblGateIn.ajax.url(importIn).load()
+                        break;
+                    case 'EXPORT':
+                        propData.tab = 'EXPORT'
+                        tblGateIn.ajax.url(exportIn).load()
+                        break;
+                }
+            })
+            propData.searchable(tblGateIn, importIn, exportIn)
 
-            $("#default-daterange").daterangepicker({
-                opens: "right",
-                format: "MM/DD/YYYY",
-                separator: " to ",
-                startDate: moment().subtract("days", 0),
-                endDate: moment(),
-                minDate: moment().subtract("month", 3),
-                maxDate: "+3M",
-            }, function(start, end) {
-                $("#default-daterange input").val(start.format("DD/MM/yyyy") + "-" + end.format(
-                    "DD/MM/yyyy"));
-            });
-            let dataSelect = [{
-                    id: 'ref_num',
-                    text: 'Refrensi Number'
-                },
-                {
-                    id: 'wk_inout',
-                    text: 'Waktu Gate In Out'
-                },
-                {
-                    id: 'no_daftar_pabean',
-                    text: 'No Pendaftaran'
-                },
-                {
-                    id: 'no_bc11',
-                    text: 'BC 11'
-                },
-                {
-                    id: 'tgl_bc11',
-                    text: 'Tanggal BC 11'
-                },
-                {
-                    id: 'no_master_bl_awb',
-                    text: 'MAWB'
-                },
-                {
-                    id: 'no_bl_awb',
-                    text: 'HAWB'
-                },
-                {
-                    id: 'consignee',
-                    text: 'Consignee'
-                },
-                {
-                    id: 'nm_angkut',
-                    text: 'Sarana Angkut'
-                },
-            ]
-            $(".default-select2").select2({
-                data: dataSelect
-            });
         });
     </script>
 @endpush
@@ -136,8 +116,6 @@
     <link href="{{ asset('/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
         .modal-loader {
             background: rgba(255, 255, 255, 0.85);

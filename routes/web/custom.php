@@ -15,6 +15,8 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
     });
     Route::prefix('abandon')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\AbandonController::class,'index'])->name('abandon');
+        Route::get('/import-data-in', [\App\Http\Controllers\Custom\AbandonController::class,'import_in'])->name('abandon.import-in');
+        Route::get('/export-data-in', [\App\Http\Controllers\Custom\AbandonController::class,'export_in'])->name('abandon.export-in');
     });
     Route::prefix('carrent-now')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\CarrentNowController::class,'index'])->name('carrent-now');
