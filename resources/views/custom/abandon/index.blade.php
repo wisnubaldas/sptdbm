@@ -56,23 +56,7 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
     <script>
-        let propData = {
-            tab: 'IMPORT',
-            searchable: function(tblGateIn, tblGateOut, importIn, importOut, exportIn, exportOut) {
-                $('#search-data').on('click', function(a) {
-                    a.preventDefault()
-                    let dataForm = $('#frm-serch').serialize()
-                    if (propData.tab == 'IMPORT') {
-                        // console.log(propData.tab);
-                        tblGateIn.ajax.url(importIn + '?' + dataForm).load()
-                    } else {
-                        // console.log(propData.tab);
-                        tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
-                    }
-                    $('#frm-serch')[0].reset();
-                })
-            }
-        }
+        
         $(document).ready(function() {
             let importIn = {{ Js::from(route('abandon.import-in')) }};
             let exportIn = {{ Js::from(route('abandon.export-in')) }};

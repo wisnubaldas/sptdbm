@@ -10,47 +10,44 @@
     <h1 class="page-header">Daftar Barang Carrent Now  <small>Import/Export </small></h1>
     <ul class="nav nav-tabs " id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">EXPORT</a>
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#import" role="tab" aria-controls="home"
+                aria-selected="true">IMPORT</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">IMPORT</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#export" role="tab" aria-controls="profile"
+                aria-selected="false">EXPORT</a>
         </li>
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <x-form-search action="#" method="#"/>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <x-form-search action="#" method="GET" />
-        </div>
-    </div>
-    <div class="panel panel-inverse p-2">
-        <div class="panel-heading panel-heading bg-cyan-700 text-white">
-            <h4 class="panel-title">Data Inventory</h4>
-            <div class="panel-heading-btn">
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"
-                    data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-expand"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
-                        class="fa fa-redo"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
-                        class="fa fa-minus"></i></a>
-                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
-                        class="fa fa-times"></i></a>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="modal-content">
-                <div class="table-responsive">
-                    <table id="myTable" class="table table-striped table-bordered align-middle display nowrap"
-                        style="width: 100%">
-                    </table>
+            <div class="panel panel-inverse">
+                <div class="panel-heading panel-heading bg-cyan-700 text-white">
+                    <h4 class="panel-title">Data Inventory</h4>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"
+                            data-bs-original-title="" title="" data-tooltip-init="true"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
+                                class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
+                                class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
+                                class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="modal-content">
+                        <div class="table-responsive">
+                            <table id="myTable" class="table table-striped table-bordered align-middle display nowrap"
+                                style="width: 100%">
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+  
       @endsection
 
 @push('js')
@@ -82,19 +79,35 @@
                                 }])
                         });
 
-            $("#gate-in-date").datepicker({
-                todayHighlight: true,
-                autoclose: true,
-                format:'yyyymmdd'
-            });
+            
 
             $('#search-data').on('click',function(a){
                 a.preventDefault()
+                // console.log(propData.tab)
                 let dataForm = $('#frm-serch').serialize()
-                tbl.ajax.url('?'+dataForm).load()
+                tbl.ajax.url('?target='+propData.tab+'&'+dataForm).load()
                 $('#frm-serch')[0].reset();
             })
 
+            // tab show
+            $('#myTab a').on('click', function(e) {
+                // e.preventDefault()
+                $(this).tab('show')
+            })
+            $('#myTab a').on('shown.bs.tab', function(e) {
+                // console.log(e.target.innerText)
+                // console.log(e.relatedTarget);
+                switch (e.target.innerText) {
+                    case 'IMPORT':
+                        propData.tab = 'IMPORT'
+                        tbl.ajax.url(dInOut+'/IMPORT').load()
+                        break;
+                    case 'EXPORT':
+                        propData.tab = 'EXPORT'
+                        tbl.ajax.url(dInOut+'/EXPORT').load()
+                        break;
+                }
+            })
         });
     </script>
 @endpush

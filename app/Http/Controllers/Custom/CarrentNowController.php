@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\UseCase\MasterDataUseCase;
 use App\UseCase\ImportGateInOutUseCase;
+use App\UseCase\ExportGateInOutUseCase;
 class CarrentNowController extends Controller
 {
     protected $InOutData;
@@ -15,9 +16,19 @@ class CarrentNowController extends Controller
         $this->middleware('auth');
         $this->masterData = $master;
     }
-    public function index(Request $request,ImportGateInOutUseCase $data) {
+    public function index(Request $request,ImportGateInOutUseCase $data,ExportGateInOutUseCase $export) {
         if($request->ajax()){
-            return $data->getCurrentNow($request);
+            switch ($request->segment(3)) {
+                case 'IMPORT':
+                        return $data->getCurrentNow($request);
+                    break;
+                case 'EXPORT':
+                        return $export->currentNowExportIn($request);
+                    break;
+                default:
+                        return $data->getCurrentNow($request);
+                    break;
+            }
         }     
         return view('custom.carnow.index',['master'=>$this->masterData]);
     }

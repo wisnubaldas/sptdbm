@@ -3,11 +3,14 @@
 namespace App\UseCase;
 
 use DataTables;
+use App\Models\TpsOnline\GateExpIn;
 use \App\Models\TpsOnline\GateImportIn;
 use \App\Models\TpsOnline\GateImportOut;
 use \App\Models\TpsOnline\AutoPenegahan;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\UseCase\ExportGateInOutUseCase;
+
 /**
  * Class UseCase.
  *
@@ -15,6 +18,11 @@ use Carbon\Carbon;
  */
 class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
 {
+    public $export;
+    public function __construct(ExportGateInOutUseCase $export)
+    {
+        $this->export = $export;
+    }
     protected $fillable = array(
         "kd_tps",
         "nm_angkut",
@@ -50,9 +58,20 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
 
     public function getCurrentNow($request)
     {
-        $query = GateImportIn::doesntHave('tegah');
+        switch ($request->target) {
+            case 'IMPORT':
+                $query = GateImportIn::doesntHave('tegah');
+                break;
+            case 'EXPORT':
+                $query = GateExpIn::doesntHave('tegah');
+                break;
+            default:
+                $query = GateImportIn::doesntHave('tegah');
+                break;
+        }
+        
         return DataTables::of($query)
-            ->filter(function ($query){
+            ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));
                 }
@@ -81,6 +100,10 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
     }
     public function getDataTegah($awb)
     {
+        $ex = $this->export->getExportTegah($awb);
+        if ($ex) {
+            return $ex;
+        }
         return GateImportIn::where('no_bl_awb', $awb)->first();
     }
     public function setDataTegah($data, $form)
@@ -136,7 +159,7 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
     {
         $query = GateImportIn::has('tegah');
         return DataTables::of($query)
-            ->filter(function ($query){
+            ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));
                 }
@@ -155,28 +178,27 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
             ->addColumn('status_tegah', function ($data) {
-                if($data->tegah->flag_release == 0){
+                if ($data->tegah->flag_release == 0) {
                     return '<strong class="text-danger">Proses Tegah oleh petugas</strong>';
                 }
-                if($data->tegah->flag_release == 1){
+                if ($data->tegah->flag_release == 1) {
                     return '<strong class="text-success">Barang sudah realease</strong>';
                 }
             })
             ->addColumn('status_release', function ($data) {
-                if($data->tegah->flag_release == 0){
+                if ($data->tegah->flag_release == 0) {
                     $r = route('custom-module.get-release', $data->no_bl_awb);
                     return '<a href="' . $r . '" class="btn btn-success btn-xs ">
                                 <i class="fas fa-lg fa-fw fa-handshake"></i> Realease
                         </a>';
                 }
-                if($data->tegah->flag_release == 1){
-                    $r = route('custom.carnow.get-data-tegah', $data->no_bl_awb);
-                    return '<a href="#" class="btn btn-info btn-xs ">
-                                <i class="fas fa-lg fa-fw fa-list-alt"></i> Detail
-                        </a>';
+                if ($data->tegah->flag_release == 1) {
+                    return '<button class="btn btn-info btn-xs" onClick=propData.detail_release("'.$data->no_bl_awb.'") >
+                        <i class="fas fa-lg fa-fw fa-list-alt"></i> Detail
+                    </button>';
                 }
             })
-            ->rawColumns(['status_tegah','status_release'])
+            ->rawColumns(['status_tegah', 'status_release'])
             ->make(true);
 
     }
@@ -190,20 +212,21 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ['no_bl_awb' => $request->hawb],
             [
                 'no_bl_awb' => $request->hawb,
-                'no_lepas_segel'=>$request->no_lepas_segel,
-                'petugas_lepas_segel'=> $request->petugas_lepas_segel,
-                'tgl_lepas_segel'=> $request->tgl_lepas_segel,
-                'alasan_lepas_segel'=>$request->alasan_lepas_segel,
+                'no_lepas_segel' => $request->no_lepas_segel,
+                'petugas_lepas_segel' => $request->petugas_lepas_segel,
+                'tgl_lepas_segel' => $request->tgl_lepas_segel,
+                'alasan_lepas_segel' => $request->alasan_lepas_segel,
                 'flag_release' => 1,
             ]
         );
     }
 
     // data inventory
-    public function getDataInInventory($request){
+    public function getDataInInventory($request)
+    {
         $query = GateImportIn::query();
         return DataTables::of($query)
-            ->filter(function ($query){
+            ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));
                 }
@@ -223,9 +246,10 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
             ->make(true);
     }
-    public function getDataOutInventory($request){
+    public function getDataOutInventory($request)
+    {
         return DataTables::of(GateImportOut::query())
-            ->filter(function ($query){
+            ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));
                 }
@@ -245,10 +269,11 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
             ->make(true);
     }
-    public function abandonImportIn($request){
+    public function abandonImportIn($request)
+    {
         $date = Carbon::now()->subDays(30);
-        return DataTables::of(GateImportIn::query()->where( 'tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout',6))
-            ->filter(function ($query){
+        return DataTables::of(GateImportIn::query()->where('tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout', 6))
+            ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));
                 }
@@ -268,6 +293,6 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
             ->make(true);
     }
-    
+
 
 }

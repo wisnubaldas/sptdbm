@@ -83,27 +83,7 @@
     <script src="{{ asset('/assets/plugins/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
     <script>
-        // global variablenya
-        let propData = {
-            tab: 'IMPORT',
-            searchable: function(tblGateIn, tblGateOut, importIn, importOut, exportIn, exportOut) {
-                $('#search-data').on('click', function(a) {
-                    a.preventDefault()
-                    let dataForm = $('#frm-serch').serialize()
-                    if (propData.tab == 'IMPORT') {
-                        // console.log(propData.tab);
-                        tblGateIn.ajax.url(importIn + '?' + dataForm).load()
-                        tblGateOut.ajax.url(importOut + '?' + dataForm).load()
-                    } else {
-                        // console.log(propData.tab);
-                        tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
-                        tblGateOut.ajax.url(exportOut + '?' + dataForm).load()
-                    }
-                    $('#frm-serch')[0].reset();
-                })
-            }
-        }
-
+        
         $(document).ready(function() {
             let importIn = {{ Js::from(route('inventory.get_data_in')) }};
             let importOut = {{ Js::from(route('inventory.get_data_out')) }};
