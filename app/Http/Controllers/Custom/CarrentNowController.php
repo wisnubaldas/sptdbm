@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\UseCase\MasterDataUseCase;
 use App\UseCase\ImportGateInOutUseCase;
 use App\UseCase\ExportGateInOutUseCase;
+use \App\Exports\TpsImport;
+use \Carbon\Carbon;
 class CarrentNowController extends Controller
 {
     protected $InOutData;
@@ -18,7 +20,7 @@ class CarrentNowController extends Controller
     }
     public function index(Request $request,ImportGateInOutUseCase $data,ExportGateInOutUseCase $export) {
         if($request->ajax()){
-            switch ($request->segment(3)) {
+            switch ($request->target) {
                 case 'IMPORT':
                         return $data->getCurrentNow($request);
                     break;
@@ -44,6 +46,9 @@ class CarrentNowController extends Controller
         $dataTegah = $ImportGateInOut->getDataTegah($request->hawb);
         $ImportGateInOut->setDataTegah($dataTegah,$request->all());
         return \redirect()->route('carrent-now');
+    }
+    public function currentnow_excel(Request $r,TpsImport $excel){
+        return (new TpsImport($r))->download('carnow-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
 
 }

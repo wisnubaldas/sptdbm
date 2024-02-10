@@ -8,15 +8,17 @@ use Illuminate\View\Component;
 
 class FormSearch extends Component
 {
+    public $excel;
     public $action;
     public $method;
     /**
      * Create a new component instance.
      */
-    public function __construct($action,$method)
+    public function __construct($action,$method, $excel=null)
     {
         $this->action = $action;
         $this->method = $method;
+        $this->excel = $excel;
     }
 
     /**

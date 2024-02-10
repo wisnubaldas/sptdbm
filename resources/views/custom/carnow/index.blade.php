@@ -20,7 +20,7 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="#" method="#"/>
+            <x-form-search action="#" method="#" excel="{{route('currentnow.download-excel')}}"/>
             <div class="panel panel-inverse">
                 <div class="panel-heading panel-heading bg-cyan-700 text-white">
                     <h4 class="panel-title">Data Inventory</h4>
@@ -56,13 +56,8 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
     <script>
-
         $(document).ready(function() {
-            
             let dInOut = {{ Js::from(route('carrent-now')) }};
             let tbl = $('#myTable').DataTable({
                             responsive: false,
@@ -100,11 +95,11 @@
                 switch (e.target.innerText) {
                     case 'IMPORT':
                         propData.tab = 'IMPORT'
-                        tbl.ajax.url(dInOut+'/IMPORT').load()
+                        tbl.ajax.url(dInOut+'?target=IMPORT').load()
                         break;
                     case 'EXPORT':
                         propData.tab = 'EXPORT'
-                        tbl.ajax.url(dInOut+'/EXPORT').load()
+                        tbl.ajax.url(dInOut+'?target=EXPORT').load()
                         break;
                 }
             })

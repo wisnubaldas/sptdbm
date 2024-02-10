@@ -19,7 +19,7 @@
         </li>
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
-        <x-form-search action="#" method="" />
+        <x-form-search action="#" method="" excel="{{route('inventory.download-excel')}}"/>
         {{-- panel table IN --}}
         <div class="panel panel-inverse">
             <div class="panel-heading panel-heading bg-lime-600 text-white">

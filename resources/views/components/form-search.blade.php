@@ -8,7 +8,7 @@
                 </div>
                 <div class="btn btn-group">
                     <button class="btn btn-primary" type="button">Export PDF</button>
-                    <button class="btn btn-warning" type="button">Export Excel</button>
+                    <button class="btn btn-warning" type="button" id="export-excel">Export Excel</button>
                     <button class="btn btn-info" type="button" id="search-data"><i class="fas fa-fw fa-search"></i> Search</button>
                 </div>
             </div>
@@ -44,6 +44,7 @@
 @push('js')
 <script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
 <script>
+    let uri_excel = {{ Js::from($excel) }};
     $(document).ready(function(){
         $("#gate-in-date").datepicker({
                 todayHighlight: true,
@@ -51,6 +52,17 @@
                 format:'yyyymmdd',
                 orientation: "bottom left"
             });
+        
+        // kasih ajax disini
+        $('#export-excel').click(function(a){
+            // a.preventDefault()
+            // console.log(propData.tab)
+            // console.log(uri_excel);
+            let dataForm = $('#frm-serch').serialize()
+            let linkNya = uri_excel+'?type='+propData.tab+'&'+dataForm
+            console.error(linkNya);
+            window.open(linkNya, "_blank");
+        })
     })
 </script>
 @endpush

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\UseCase\ImportGateInOutUseCase;
 use App\UseCase\ExportGateInOutUseCase;
 use Illuminate\Http\Request;
+use \App\Exports\TpsImport;
+use \Carbon\Carbon;
 class CustomModuleController extends Controller
 {
     protected $InOutData;
@@ -42,5 +44,8 @@ class CustomModuleController extends Controller
     }
     public function detail_release($awb){
         return \App\Models\TpsOnline\AutoPenegahan::where('no_bl_awb',$awb)->first();
+    }
+    public function custom_excel(Request $r,TpsImport $excel){
+        return (new TpsImport($r))->download('modul-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
 }
