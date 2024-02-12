@@ -13,6 +13,7 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
         Route::get('/get-export-in', [\App\Http\Controllers\Custom\InventoryController::class,'export_in'])->name('inventory.export_in');
         Route::get('/get-export-out', [\App\Http\Controllers\Custom\InventoryController::class,'export_out'])->name('inventory.export_out');
         Route::get('/download-excel', [\App\Http\Controllers\Custom\InventoryController::class,'inventory_excel'])->name('inventory.download-excel');
+        Route::get('/download-pdf', [\App\Http\Controllers\Custom\InventoryController::class,'inventory_pdf'])->name('inventory.download-pdf');
 
     });
     Route::prefix('abandon')->group(function(){
@@ -37,8 +38,5 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
         Route::get('/detail-release/{awb}',[\App\Http\Controllers\Custom\CustomModuleController::class,'detail_release'])->name('custom-module.detail-release');
         Route::get('/download-excel', [\App\Http\Controllers\Custom\CustomModuleController::class,'custom_excel'])->name('custom.download-excel');
 
-    });
-    Route::prefix('stock-opname')->group(function(){
-        Route::get('/', [\App\Http\Controllers\Custom\StockOpnameController::class,'index'])->name('stock-opname');        
     });
 });

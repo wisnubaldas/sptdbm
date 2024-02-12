@@ -34,10 +34,6 @@ class CarrentNowController extends Controller
         }     
         return view('custom.carnow.index',['master'=>$this->masterData]);
     }
-    
-    // public function get_data_carrent_now(ImportGateInOutUseCase $data){
-    //      return $data->getCurrentNow($this->customRequest);
-    // }
     public function get_data_tegah($awb,ImportGateInOutUseCase $ImportGateInOut){
         $dataTegah = $ImportGateInOut->getDataTegah($awb);
         return view('custom.carnow.form-tegah',compact('dataTegah'));

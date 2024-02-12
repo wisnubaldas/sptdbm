@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\UseCase\ImportGateInOutUseCase;
 use App\UseCase\ExportGateInOutUseCase;
+use \App\UseCase\TpsPdfUseCase;
 use \App\Exports\TpsImport;
 use \Carbon\Carbon;
 class InventoryController extends Controller
@@ -34,5 +35,8 @@ class InventoryController extends Controller
     }
     public function inventory_excel(Request $r,TpsImport $excel){
         return (new TpsImport($r))->download('inventory-'.Carbon::now()->format('YmdHis').'.xlsx');
+    }
+    public function inventory_pdf(Request $r, TpsPdfUseCase $pdf){
+        return $pdf->inventory($r,'Inventory Data '.$r->type);
     }
 }

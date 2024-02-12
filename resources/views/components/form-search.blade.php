@@ -7,7 +7,7 @@
                     <label for="floatingInput" class="d-flex align-items-center fs-13px">No BC 1.1</label>
                 </div>
                 <div class="btn btn-group">
-                    <button class="btn btn-primary" type="button">Export PDF</button>
+                    <button class="btn btn-primary" type="button" id="export-pdf">Export PDF</button>
                     <button class="btn btn-warning" type="button" id="export-excel">Export Excel</button>
                     <button class="btn btn-info" type="button" id="search-data"><i class="fas fa-fw fa-search"></i> Search</button>
                 </div>
@@ -45,6 +45,8 @@
 <script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
 <script>
     let uri_excel = {{ Js::from($excel) }};
+    let uri_pdf = {{ Js::from($pdf) }};
+    
     $(document).ready(function(){
         $("#gate-in-date").datepicker({
                 todayHighlight: true,
@@ -60,7 +62,13 @@
             // console.log(uri_excel);
             let dataForm = $('#frm-serch').serialize()
             let linkNya = uri_excel+'?type='+propData.tab+'&'+dataForm
-            console.error(linkNya);
+            console.log(linkNya);
+            window.open(linkNya, "_blank");
+        })
+        $('#export-pdf').click(function(a){
+            let dataForm = $('#frm-serch').serialize()
+            let linkNya = uri_pdf+'?type='+propData.tab+'&'+dataForm
+            console.log(linkNya);
             window.open(linkNya, "_blank");
         })
     })
