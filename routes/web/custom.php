@@ -6,6 +6,8 @@ use PHPUnit\Framework\Attributes\Group;
 // sesuaikan dulu kontroller nya
 
 Route::prefix('custom')->middleware(['web','auth'])->group(function () {
+    Route::get('/download-pdf', [\App\Http\Controllers\Custom\InventoryController::class,'inventory_pdf'])->name('download-pdf');
+
     Route::prefix('inventory')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\InventoryController::class,'index']);
         Route::get('/get-data-in', [\App\Http\Controllers\Custom\InventoryController::class,'get_data_in'])->name('inventory.get_data_in');
@@ -13,8 +15,6 @@ Route::prefix('custom')->middleware(['web','auth'])->group(function () {
         Route::get('/get-export-in', [\App\Http\Controllers\Custom\InventoryController::class,'export_in'])->name('inventory.export_in');
         Route::get('/get-export-out', [\App\Http\Controllers\Custom\InventoryController::class,'export_out'])->name('inventory.export_out');
         Route::get('/download-excel', [\App\Http\Controllers\Custom\InventoryController::class,'inventory_excel'])->name('inventory.download-excel');
-        Route::get('/download-pdf', [\App\Http\Controllers\Custom\InventoryController::class,'inventory_pdf'])->name('inventory.download-pdf');
-
     });
     Route::prefix('abandon')->group(function(){
         Route::get('/', [\App\Http\Controllers\Custom\AbandonController::class,'index'])->name('abandon');

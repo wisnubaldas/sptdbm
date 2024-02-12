@@ -20,7 +20,7 @@
     </ul>
     <div class="tab-content bg-white p-3 rounded-bottom" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <x-form-search action="#" method="#" excel="{{route('currentnow.download-excel')}}"/>
+            <x-form-search action="#" method="#" excel="{{route('currentnow.download-excel')}}" pdf="{{route('download-pdf')}}"/>
             <div class="panel panel-inverse">
                 <div class="panel-heading panel-heading bg-cyan-700 text-white">
                     <h4 class="panel-title">Data Inventory</h4>
