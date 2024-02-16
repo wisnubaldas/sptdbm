@@ -7,8 +7,8 @@
                     <label for="floatingInput" class="d-flex align-items-center fs-13px">No BC 1.1</label>
                 </div>
                 <div class="btn btn-group">
-                    <button class="btn btn-primary" type="button" id="export-pdf">Export PDF</button>
-                    <button class="btn btn-warning" type="button" id="export-excel">Export Excel</button>
+                    <button class="btn btn-primary" type="button" id="export-pdf">Download PDF</button>
+                    <button class="btn btn-warning" type="button" id="export-excel">Download Excel</button>
                     <button class="btn btn-info" type="button" id="search-data"><i class="fas fa-fw fa-search"></i> Search</button>
                 </div>
             </div>

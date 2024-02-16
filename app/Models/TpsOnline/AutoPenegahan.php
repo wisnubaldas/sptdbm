@@ -10,7 +10,7 @@ class AutoPenegahan extends Model
 {
     use HasFactory;
     protected $connection = 'db_tpsonline';
-    protected $table = 'auto_penegahan';
+    protected $table = 'gate_tegah';
     protected $primaryKey = 'id_kms';
     // public $incrementing = false;
     // protected $keyType = 'string';

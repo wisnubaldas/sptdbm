@@ -9,7 +9,7 @@ class GateExpOut extends Model
 {
     use QueryCacheable, HasFactory;
     protected $connection = 'db_tpsonline';
-    protected $table = 'get_exp_out';
+    protected $table = 'gate_eks_out';
     protected $primaryKey = 'id_kms';
     // public $incrementing = false;
     // protected $keyType = 'string';

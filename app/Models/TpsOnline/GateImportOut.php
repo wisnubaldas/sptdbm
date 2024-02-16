@@ -12,7 +12,7 @@ class GateImportOut extends Model
 {
     use QueryCacheable, HasFactory;
     protected $connection = 'db_tpsonline';
-    protected $table = 'get_imp_out';
+    protected $table = 'gate_imp_out';
     protected $primaryKey = 'id_kms';
     // public $incrementing = false;
     // protected $keyType = 'string';

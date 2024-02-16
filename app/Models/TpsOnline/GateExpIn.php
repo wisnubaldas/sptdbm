@@ -11,7 +11,7 @@ class GateExpIn extends Model
 {
     use  HasFactory;
     protected $connection = 'db_tpsonline';
-    protected $table = 'get_exp_in';
+    protected $table = 'gate_eks_in';
     protected $primaryKey = 'id_kms';
     // public $incrementing = false;
     // protected $keyType = 'string';
