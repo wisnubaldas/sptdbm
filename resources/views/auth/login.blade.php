@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Color Admin | Login v2</title>
+    <title>Cardig TPS Online</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -37,9 +37,9 @@
             </div>
 
 
-            <div class="login-container">
+            <div class="login-container container">
 
-                <div class="login-header">
+                <div class="login-header d-none d-sm-block">
                     <div class="brand">
                         <div class="d-flex align-items-center">
                             <img class="image" src="{{ asset('assets/img/cen_full.png') }}"
@@ -47,7 +47,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="login-content">
                     <form action="{{ route('login') }}" method="POST">
