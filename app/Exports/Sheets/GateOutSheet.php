@@ -26,7 +26,7 @@ class GateOutSheet implements FromQuery, WithTitle, ShouldAutoSize, WithHeadings
                 ->orWhere('no_daftar_pabean',$this->request->no_daftar_pabean)
                 ->orWhere('ref_num',$this->request->ref_num)
                 ->orWhere('no_master_bl_awb',$this->request->no_master_bl_awb)
-                ->orWhere('wk_inout',$this->request->wk_inout)
+                ->orWhere('wk_inout','like',$this->request->wk_inout.'%')
                 ->orWhere('no_bc11',$this->request->no_bc11);
         }
 
@@ -36,7 +36,7 @@ class GateOutSheet implements FromQuery, WithTitle, ShouldAutoSize, WithHeadings
                         ->orWhere('no_daftar_pabean',$this->request->no_daftar_pabean)
                         ->orWhere('ref_num',$this->request->ref_num)
                         ->orWhere('no_master_bl_awb',$this->request->no_master_bl_awb)
-                        ->orWhere('wk_inout',$this->request->wk_inout)
+                        ->orWhere('wk_inout','like',$this->request->wk_inout.'%')
                         ->orWhere('no_bc11',$this->request->no_bc11);
         }
     }
