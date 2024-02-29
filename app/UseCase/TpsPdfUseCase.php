@@ -44,7 +44,7 @@ class TpsPdfUseCase implements TpsPdfUseCaseInterface
         ->orWhere('no_daftar_pabean',$r->no_daftar_pabean)
         ->orWhere('ref_num',$r->ref_num)
         ->orWhere('no_master_bl_awb',$r->no_master_bl_awb)
-        ->orWhere('wk_inout',$r->wk_inout)
+        ->orWhere('wk_inout','like',$r->wk_inout.'%')
         ->orWhere('no_bc11',$r->no_bc11);
     }
     protected function import_gate_out($r){
@@ -53,7 +53,7 @@ class TpsPdfUseCase implements TpsPdfUseCaseInterface
         ->orWhere('no_daftar_pabean',$r->no_daftar_pabean)
         ->orWhere('ref_num',$r->ref_num)
         ->orWhere('no_master_bl_awb',$r->no_master_bl_awb)
-        ->orWhere('wk_inout',$r->wk_inout)
+        ->orWhere('wk_inout','like',$r->wk_inout.'%')
         ->orWhere('no_bc11',$r->no_bc11);
     }
     protected function export_gate_in($r){
@@ -62,7 +62,7 @@ class TpsPdfUseCase implements TpsPdfUseCaseInterface
         ->orWhere('no_daftar_pabean',$r->no_daftar_pabean)
         ->orWhere('ref_num',$r->ref_num)
         ->orWhere('no_master_bl_awb',$r->no_master_bl_awb)
-        ->orWhere('wk_inout',$r->wk_inout)
+        ->orWhere('wk_inout','like',$r->wk_inout.'%')
         ->orWhere('no_bc11',$r->no_bc11);
     }
     protected function export_gate_out($r){
@@ -71,7 +71,7 @@ class TpsPdfUseCase implements TpsPdfUseCaseInterface
         ->orWhere('no_daftar_pabean',$r->no_daftar_pabean)
         ->orWhere('ref_num',$r->ref_num)
         ->orWhere('no_master_bl_awb',$r->no_master_bl_awb)
-        ->orWhere('wk_inout',$r->wk_inout)
+        ->orWhere('wk_inout','like',$r->wk_inout.'%')
         ->orWhere('no_bc11',$r->no_bc11);
     }
 
