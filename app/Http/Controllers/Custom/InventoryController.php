@@ -34,7 +34,7 @@ class InventoryController extends Controller
         return $exportData->getExportOut($request);
     }
     public function inventory_excel(Request $r,TpsImport $excel){
-        return (new TpsImport($r))->download('inventory-'.Carbon::now()->format('YmdHis').'.xlsx');
+        return (new TpsImport($r))->download('TPS-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
     public function inventory_pdf(Request $r, TpsPdfUseCase $pdf){
         return $pdf->inventory($r,'Inventory Data '.$r->type);
