@@ -74,6 +74,4 @@ class TpsPdfUseCase implements TpsPdfUseCaseInterface
         ->orWhere('wk_inout','like',$r->wk_inout.'%')
         ->orWhere('no_bc11',$r->no_bc11);
     }
-
-    
 }

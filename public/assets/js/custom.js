@@ -194,6 +194,7 @@ let custom = {
 function close_modal(a) {
     $('#exampleModal').modal('hide');
 }
+// form searching ajax
 let propData = {
     tab: 'IMPORT',
     searchable: function (tblGateIn, tblGateOut, importIn, importOut, exportIn, exportOut) {
@@ -203,9 +204,11 @@ let propData = {
             if (propData.tab == 'IMPORT') {
                 // console.log(propData.tab);
                 tblGateIn.ajax.url(importIn + '?' + dataForm).load()
+                tblGateOut.ajax.url(importOut + '?' + dataForm).load()
             } else {
                 // console.log(propData.tab);
                 tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
+                tblGateOut.ajax.url(exportOut + '?' + dataForm).load()
             }
             $('#frm-serch')[0].reset();
         })
