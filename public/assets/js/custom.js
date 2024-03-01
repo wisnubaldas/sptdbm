@@ -194,7 +194,9 @@ let custom = {
 function close_modal(a) {
     $('#exampleModal').modal('hide');
 }
+
 // form searching ajax
+// ini ajax buat search di form pencarian
 let propData = {
     tab: 'IMPORT',
     searchable: function (tblGateIn, tblGateOut, importIn, importOut, exportIn, exportOut) {
