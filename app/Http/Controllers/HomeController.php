@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use \App\UseCase\DashboardUseCase;
 class HomeController extends Controller
 {
     /**
@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function get_dashboard(DashboardUseCase $dashboardUseCase) {
+        return $dashboardUseCase->panel_header();
+    }
+    public function get_data_chart(DashboardUseCase $dashboardUseCase) {
+        return [
+            'import'=>$dashboardUseCase->chart_import(),
+            'ekspor'=>$dashboardUseCase->chart_ekspor()
+        ];
+    }
+
 }

@@ -28,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
             \App\UseCase\TpsPdfUseCaseInterface::class,
             \App\UseCase\TpsPdfUseCase::class
         );
+        $this->app->singleton(
+            \App\UseCase\DashboardUseCaseInterface::class,
+            \App\UseCase\DashboardUseCase::class
+        );
     }
 
     /**
