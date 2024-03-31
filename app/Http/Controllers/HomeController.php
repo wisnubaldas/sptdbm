@@ -31,7 +31,9 @@ class HomeController extends Controller
     public function get_data_chart(DashboardUseCase $dashboardUseCase) {
         return [
             'import'=>$dashboardUseCase->chart_import(),
-            'ekspor'=>$dashboardUseCase->chart_ekspor()
+            'ekspor'=>$dashboardUseCase->chart_ekspor(),
+            'import_bruto'=>$dashboardUseCase->chart_bruto(),
+            'import_bruto_tahun'=>$dashboardUseCase->donat_per_tahun(),
         ];
     }
 

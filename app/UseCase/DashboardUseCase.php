@@ -15,7 +15,11 @@ use Carbon\Carbon;
  */
 class DashboardUseCase implements DashboardUseCaseInterface
 {
-
+    public $dateNow;
+    
+    public function __construct() {
+        $this->dateNow = Carbon::now();
+    }
     public function panel_header()
     {
         return [
@@ -30,17 +34,28 @@ class DashboardUseCase implements DashboardUseCaseInterface
         ];
     }
     public function chart_import(){
-        $wr = new Carbon('now');
         return GateImportIn::select(DB::raw('SUBSTRING(tgl_bl_awb,7) AS tgl,COUNT(tgl_bl_awb) AS jml'))
-        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y%m%d') BETWEEN '".$wr->startOfMonth()->format('Ymd')."' AND '".$wr->endOfMonth()->format('Ymd')."')")
+        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y%m%d') BETWEEN '".$this->dateNow->startOfMonth()->format('Ymd')."' AND '".$this->dateNow->endOfMonth()->format('Ymd')."')")
         ->groupBy('tgl_bl_awb')
         ->get();
     }
-    function chart_ekspor() {
-        $wr = new Carbon('now');
+    public function chart_ekspor() {
         return GateExpIn::select(DB::raw('SUBSTRING(tgl_bl_awb,7) AS tgl,COUNT(tgl_bl_awb) AS jml'))
-        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y%m%d') BETWEEN '".$wr->startOfMonth()->format('Ymd')."' AND '".$wr->endOfMonth()->format('Ymd')."')")
+        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y%m%d') BETWEEN '".$this->dateNow->startOfMonth()->format('Ymd')."' AND '".$this->dateNow->endOfMonth()->format('Ymd')."')")
         ->groupBy('tgl_bl_awb')
+        ->get();
+    }
+    public function chart_bruto() {
+        return GateImportIn::select(DB::raw('SUBSTRING(tgl_bl_awb,7) AS tgl,SUM(bruto) AS berat'))
+        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y%m%d') BETWEEN '".$this->dateNow->startOfMonth()->format('Ymd')."' AND '".$this->dateNow->endOfMonth()->format('Ymd')."')")
+        ->groupBy('tgl_bl_awb')
+        ->get();
+    }
+    public function donat_per_tahun() {
+        // dd($this->dateNow->format('Y'));
+        return GateImportIn::select(DB::raw('SUBSTRING(tgl_bl_awb,5,2) AS bln, SUM(bruto) AS berat'))
+        ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y') BETWEEN '".$this->dateNow->startOfYear()->format('Y')."' AND '".$this->dateNow->endOfYear()->format('Y')."')")
+        ->groupBy('bln')
         ->get();
     }
 

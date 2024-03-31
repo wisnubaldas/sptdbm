@@ -11,8 +11,11 @@
         <x-dashboard.status-panel />
 
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <x-dashboard.chart-dashboard-one />
+            </div>
+            <div class="col-xl-8">
+                <x-dashboard.chart-dashboard-two />
 
                 <div class="panel panel-inverse" data-sortable-id="index-8">
                     <div class="panel-heading">
@@ -103,16 +106,13 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
             {{-- end grid --}}
 
             <div class="col-xl-4">
-                <div class="panel panel-inverse" data-sortable-id="index-6">
+                <div class="panel panel-inverse pb-2" data-sortable-id="index-6">
                     <div class="panel-heading">
-                        <h4 class="panel-title">Analytics Kode Dokumen</h4>
+                        <h4 class="panel-title">Bruto Per Bulan</h4>
                         <div class="panel-heading-btn">
                             <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i
                                     class="fa fa-expand"></i></a>
@@ -124,82 +124,7 @@
                                     class="fa fa-times"></i></a>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-panel align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Kode Doc</th>
-                                    <th>Total</th>
-                                    <th>Flow</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td nowrap><label class="badge bg-danger">SPPB BC 2.3</label></td>
-                                    <td>13,203 <span class="text-success"><i class="fa fa-arrow-up"></i></span></td>
-                                    <td>
-                                        <div id="sparkline-unique-visitor"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td nowrap><label class="badge bg-warning">NPE</label></td>
-                                    <td>1000</td>
-                                    <td>
-                                        <div id="sparkline-bounce-rate"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td nowrap><label class="badge bg-success">PIBK</label></td>
-                                    <td>1230</td>
-                                    <td>
-                                        <div id="sparkline-total-page-views"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td nowrap><label class="badge bg-blue">SPPBMCP</label></td>
-                                    <td>309211</td>
-                                    <td>
-                                        <div id="sparkline-avg-time-on-site"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td nowrap><label class="badge bg-default text-gray-900">Persetujuan PLP</label>
-                                    </td>
-                                    <td>59823</td>
-                                    <td>
-                                        <div id="sparkline-new-visits"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td nowrap><label class="badge bg-inverse">SPPB PIB (BC 2.0)</label></td>
-                                    <td>98923</td>
-                                    <td>
-                                        <div id="sparkline-return-visitors"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
-                <div class="panel panel-inverse" data-sortable-id="index-7">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">Status Respon</h4>
-                        <div class="panel-heading-btn">
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i
-                                    class="fa fa-expand"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i
-                                    class="fa fa-redo"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-warning"
-                                data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
-                                    class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div id="donut-chart" class="h-300px"></div>
-                    </div>
+                    <canvas id="doughnut-chart"></canvas>
                 </div>
             </div>
 
@@ -233,10 +158,29 @@
     <script src="../assets/plugins/jvectormap-next/jquery-jvectormap.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js" type="text/javascript"></script>
     <script src="../assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="../assets/plugins/chart.js/dist/Chart.min.js"></script>
     <script src="../assets/plugins/accounting.js" type="text/javascript"></script>
     <script src="../assets/plugins/moment.locales.js" type="text/javascript"></script>
     <script src="../assets/js/demo/dashboard.js" type="text/javascript"></script>
     <script>
+        let makeData = {
+            donatOne: function(d) {
+                // masih burem logika nya ini :((((((()))))))
+                let bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sept', 'Okt', 'Nov', 'Des']
+                let idx = 0;
+                for (const i of bulan) {
+                    if (d[idx] !== undefined) {
+                        let blnNya = parseInt(d[idx].bln) - 1;
+                        bulan[blnNya] = parseFloat(d[idx].berat)
+                    }
+                    idx++;
+                }
+                return bulan.map(function(x) {
+                    return parseFloat(x);
+                });
+
+            }
+        }
         var handleInteractiveChart = function(d) {
             "use strict";
             $('#tgl-sekarang').html(moment().locale('id').format('MMMM YYYY'))
@@ -254,8 +198,9 @@
                 // console.log(arrDays.reverse());
             }
 
-            function showTooltip(x, y, contents,lbl) {
-                $('<div id="tooltip" class="flot-tooltip">' + lbl+' ' + accounting.formatNumber(contents) + ' awb </div>').css({
+            function showTooltip(x, y, contents, lbl) {
+                $('<div id="tooltip" class="flot-tooltip">' + lbl + ' ' + accounting.formatNumber(contents) +
+                    ' awb </div>').css({
                     top: y - 45,
                     left: x - 55
                 }).appendTo("body").fadeIn(200);
@@ -286,11 +231,11 @@
                     lines: {
                         show: true,
                         fill: false,
-                        lineWidth: 2
+                        lineWidth: 3
                     },
                     points: {
                         show: true,
-                        radius: 3,
+                        radius: 6,
                         fillColor: COLOR_WHITE
                     },
                     shadowSize: 0
@@ -336,8 +281,11 @@
                         show: true
                     }
                 });
+
                 var previousPoint = null;
+
                 $("#interactive-chart").bind("plothover", function(event, pos, item) {
+
                     $("#x").text(pos.x.toFixed(2));
                     $("#y").text(pos.y.toFixed(2));
                     if (item) {
@@ -348,7 +296,7 @@
 
                             var content = y;
                             var lbl = item.series.label
-                            showTooltip(item.pageX, item.pageY, content,lbl);
+                            showTooltip(item.pageX, item.pageY, content, lbl);
                         }
                     } else {
                         $("#tooltip").remove();
@@ -358,6 +306,90 @@
                 });
             }
         };
+        var handleChartTwo = function(d) {
+            // ############### bikin  datanya ###############
+            let ngeloop = function(d) {
+                let x = []
+                let idx = 0;
+                for (const key in d) {
+                    if (Object.hasOwnProperty.call(d, key)) {
+                        const el = d[key];
+                        x.push([parseInt(el.tgl), parseFloat(el.berat)]);
+                    }
+                }
+                return x;
+
+            }
+            var d1 = ngeloop(d.import_bruto);
+            // console.log(d1)
+            $.plot($('#interactive-chart-two'), [{
+                data: d1,
+                label: 'Import Bruto',
+                color: COLOR_INDIGO,
+                lines: {
+                    show: true,
+                    fill: true,
+                    lineWidth: 2.5
+                },
+                points: {
+                    show: true,
+                    radius: 5,
+                    fillColor: COLOR_WHITE
+                },
+                shadowSize: 0
+            }], {
+                xaxis: {
+                    tickColor: COLOR_BLACK,
+                    tickSize: 1
+                },
+                yaxis: {
+                    tickColor: COLOR_BLACK,
+                    tickSize: 2
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    tickColor: COLOR_BLUE_TRANSPARENT_1,
+                    borderWidth: 2,
+                    backgroundColor: 'transparent',
+                    borderColor: COLOR_BLUE_TRANSPARENT_1
+                },
+                legend: {
+                    noColumns: 1,
+                    show: true
+                }
+            });
+
+            function showTooltip(x, y, contents, lbl) {
+                $('<div id="tooltip" class="flot-tooltip">' + lbl + ' ' + accounting.formatNumber(contents, 2) +
+                    ' Kg </div>').css({
+                    top: y - 45,
+                    left: x - 55
+                }).appendTo("body").fadeIn(200);
+            }
+            var previousPoint = null;
+
+            $("#interactive-chart-two").bind("plothover", function(event, pos, item) {
+                $("#x").text(pos.x.toFixed(2));
+                $("#y").text(pos.y.toFixed(2));
+                if (item) {
+                    if (previousPoint !== item.dataIndex) {
+                        previousPoint = item.dataIndex;
+                        $("#tooltip").remove();
+                        var y = item.datapoint[1].toFixed(2);
+
+                        var content = y;
+                        var lbl = item.series.label
+                        showTooltip(item.pageX, item.pageY, content, lbl);
+                    }
+                } else {
+                    $("#tooltip").remove();
+                    previousPoint = null;
+                }
+                event.preventDefault();
+            });
+        }
+
         let statusPanel = function(d) {
             $('#gate-in-import').html(accounting.formatNumber(d.import.gate_in))
             $('#gate-out-import').html(accounting.formatNumber(d.import.gate_out))
@@ -382,12 +414,64 @@
             }).done(function(response) {
                 // console.log(response)
                 handleInteractiveChart(response)
+                handleChartTwo(response)
+                chartDonatOne(response)
             }).fail(function(jqXHR, textStatus) {
                 console.log(jqXHR)
             });
 
 
         })
+    </script>
+    <script>
+        let chartDonatOne = function(d) {
+            let dataNya = makeData.donatOne(d.import_bruto_tahun)
+            Chart.defaults.font.family = FONT_FAMILY;
+            Chart.defaults.font.weight = FONT_WEIGHT;
+
+            var ctx6 = document.getElementById('doughnut-chart').getContext('2d');
+            window.myDoughnut = new Chart(ctx6, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sept', 'Okt', 'Nov',
+                        'Des'
+                    ],
+                    datasets: [{
+                        data: dataNya,
+                        backgroundColor: [
+                            COLOR_PINK_TRANSPARENT_7,
+                            COLOR_SILVER_TRANSPARENT_7,
+                            COLOR_RED_TRANSPARENT_7,
+                            COLOR_PURPLE_TRANSPARENT_7,
+                            COLOR_ORANGE_TRANSPARENT_7,
+                            COLOR_YELLOW_TRANSPARENT_7,
+                            COLOR_AQUA_TRANSPARENT_7,
+                            COLOR_INDIGO_TRANSPARENT_7,
+                            COLOR_BLUE_TRANSPARENT_7,
+                            COLOR_GREEN_TRANSPARENT_7,
+                            COLOR_GREY_TRANSPARENT_7,
+                            COLOR_DARK_TRANSPARENT_7
+                        ],
+                        borderColor: [
+                            COLOR_PINK,
+                            COLOR_SILVER,
+                            COLOR_RED,
+                            COLOR_PURPLE,
+                            COLOR_ORANGE,
+                            COLOR_YELLOW,
+                            COLOR_AQUA,
+                            COLOR_INDIGO,
+                            COLOR_BLUE,
+                            COLOR_GREEN,
+                            COLOR_GREY,
+                            COLOR_DARK
+                        ],
+                        borderWidth: 2,
+                        label: 'My dataset'
+                    }]
+                }
+            });
+        }
     </script>
 @endpush
 

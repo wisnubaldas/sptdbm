@@ -10,5 +10,4 @@ namespace App\UseCase;
  */
 interface DashboardUseCaseInterface
 {
-    public function panel_header();
 }
