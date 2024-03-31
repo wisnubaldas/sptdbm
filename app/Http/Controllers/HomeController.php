@@ -34,6 +34,7 @@ class HomeController extends Controller
             'ekspor'=>$dashboardUseCase->chart_ekspor(),
             'import_bruto'=>$dashboardUseCase->chart_bruto(),
             'import_bruto_tahun'=>$dashboardUseCase->donat_per_tahun(),
+            'log_xml'=>$dashboardUseCase->log_xml(),
         ];
     }
 

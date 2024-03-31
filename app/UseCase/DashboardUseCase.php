@@ -6,6 +6,7 @@ use App\Models\TpsOnline\GateExpIn;
 use App\Models\TpsOnline\GateExpOut;
 use App\Models\TpsOnline\GateImportIn;
 use App\Models\TpsOnline\GateImportOut;
+use App\Models\TpsOnline\XmlLog;
 use DB;
 use Carbon\Carbon;
 /**
@@ -57,6 +58,9 @@ class DashboardUseCase implements DashboardUseCaseInterface
         ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y') BETWEEN '".$this->dateNow->startOfYear()->format('Y')."' AND '".$this->dateNow->endOfYear()->format('Y')."')")
         ->groupBy('bln')
         ->get();
+    }
+    public function log_xml(){
+        return XmlLog::latest()->limit(7)->get();
     }
 
 }

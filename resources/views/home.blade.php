@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="panel-body p-0">
-                        <div class="todolist">
+                        <div class="todolist" id="td-list">
                             <div class="todolist-item">
                                 <div class="todolist-input">
                                     <div class="form-check">
@@ -179,7 +179,40 @@
                     return parseFloat(x);
                 });
 
+            },
+            removeTag : function(str) {
+    if ((str === null) || (str === ''))
+        return false;
+    else
+        str = str.toString();
+ 
+    // Regular expression to identify HTML tags in
+    // the input string. Replacing the identified
+    // HTML tag with a null string.
+    return str.replace(/(<([^>]+)>)/ig, '');
+}
+        }
+        let logXml = function(d){
+            let data = d.log_xml.reverse();
+            let res = [];
+            for (const key in data) {
+                if (Object.hasOwnProperty.call(data, key)) {
+                    const el = data[key];
+                    let tmpl = `<div class="todolist-item">
+                                <div class="todolist-input">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="${el.id}"
+                                            data-change="todolist" />
+                                    </div>
+                                </div>
+                                <label class="todolist-label" for="${el.id}">
+                                    INFO: <strong>${el.jns_api}</strong> STATUS: <strong>${makeData.removeTag(el.xml_response)}</strong>
+                                </label>
+                            </div>`
+                    res.push(tmpl)
+                }
             }
+            $('#td-list').html(res.join(''))
         }
         var handleInteractiveChart = function(d) {
             "use strict";
@@ -398,6 +431,7 @@
         }
         let cardData = "{{ route('card-data') }}";
         let chartOne = "{{ route('get-data-chart') }}";
+
         $(document).ready(function() {
             $.ajax({
                 url: cardData,
@@ -416,6 +450,7 @@
                 handleInteractiveChart(response)
                 handleChartTwo(response)
                 chartDonatOne(response)
+                logXml(response)
             }).fail(function(jqXHR, textStatus) {
                 console.log(jqXHR)
             });
