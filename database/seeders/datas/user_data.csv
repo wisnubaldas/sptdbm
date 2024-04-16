@@ -1,0 +1,4 @@
+id,name,email,password,role,permission
+1,administrator,administrator@gmail.com,password,admin,all
+2,custom,custom@gmail.com,password,custom,show
+3,report,report@gmail.com,password,report,all

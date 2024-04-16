@@ -28,6 +28,7 @@ class HomeController extends Controller
     public function get_dashboard(DashboardUseCase $dashboardUseCase) {
         return $dashboardUseCase->panel_header();
     }
+    
     public function get_data_chart(DashboardUseCase $dashboardUseCase) {
         return [
             'import'=>$dashboardUseCase->chart_import(),
@@ -37,5 +38,4 @@ class HomeController extends Controller
             'log_xml'=>$dashboardUseCase->log_xml(),
         ];
     }
-
 }

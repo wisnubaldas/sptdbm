@@ -1,0 +1,36 @@
+id,parent_id,nama,icon,label,badge,active,right_icon,path
+1,0,Dashboard,fa fa-th-large,FALSE,0,0,,/
+2,0,Master,fa fa-th-large,FALSE,0,0,,javascript:;
+3,2,Master Airlines,fa fa-th-large,FALSE,0,0,,javascript:;
+4,2,Master Flight,fa fa-th-large,FALSE,0,0,,javascript:;
+5,0,TPS Online,fa fa-th-large,FALSE,0,0,,javascript:;
+6,5,GateIn,fa fa-th-large,FALSE,0,0,,javascript:;
+7,5,GateOut,fa fa-th-large,FALSE,0,0,,javascript:;
+8,5,UnManifest,fa fa-th-large,FALSE,0,0,,javascript:;
+9,0,PLP Online,fa fa-th-large,FALSE,0,0,,javascript:;
+10,9,Permohonan PLP,fa fa-th-large,FALSE,0,0,,javascript:;
+11,9,Permohonan Batal PLP,fa fa-th-large,FALSE,0,0,,javascript:;
+12,9,Respon PLP,fa fa-th-large,FALSE,0,0,,javascript:;
+13,9,Respon Batal PLP,fa fa-th-large,FALSE,0,0,,javascript:;
+14,0,Document Import,fa fa-th-large,FALSE,0,0,,javascript:;
+15,0,Document Ekspor,fa fa-th-large,FALSE,0,0,,javascript:;
+16,14,SPPB BC2.0,fa fa-th-large,FALSE,0,0,,javascript:;
+17,14,SPPB BC23,fa fa-th-large,FALSE,0,0,,javascript:;
+18,14,SPPB BC1.6,fa fa-th-large,FALSE,0,0,,javascript:;
+19,14,Barang Kiriman,fa fa-th-large,FALSE,0,0,,javascript:;
+20,14,SPJM,fa fa-th-large,FALSE,0,0,,javascript:;
+21,14,SPPB Rush Handling,fa fa-th-large,FALSE,0,0,,javascript:;
+22,14,Check Data SPPB,fa fa-th-large,FALSE,0,0,,javascript:;
+23,15,NPE BC3.0,fa fa-th-large,FALSE,0,0,,javascript:;
+24,15,PEB,fa fa-th-large,FALSE,0,0,,javascript:;
+25,15,PKBE,fa fa-th-large,FALSE,0,0,,javascript:;
+26,0,Reporting,fa fa-th-large,FALSE,0,0,,javascript:;
+27,26,Log Data XML,fa fa-th-large,FALSE,0,0,,javascript:;
+28,26,Respon Manual,fa fa-th-large,FALSE,0,0,,javascript:;
+29,26,Report Data Timbun,fa fa-th-large,FALSE,0,0,,javascript:;
+30,0,Custom,fa fa-th-large,FALSE,0,0,,javascript:;
+31,30,Inventory,fa fa-th-large,FALSE,0,0,,/custom/inventory
+32,30,Abandon,fa fa-th-large,FALSE,0,0,,/custom/abandon
+33,30,Carrent Now,fa fa-th-large,FALSE,0,0,,/custom/carrent-now
+34,30,Custom Module,fa fa-th-large,FALSE,0,0,,/custom/custom-module
+35,30,Stock Opname,fa fa-th-large,FALSE,0,0,,javascript:;
