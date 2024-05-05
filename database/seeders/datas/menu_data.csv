@@ -25,8 +25,8 @@ id,parent_id,nama,icon,label,badge,active,right_icon,path
 24,15,PEB,fa fa-th-large,FALSE,0,0,,javascript:;
 25,15,PKBE,fa fa-th-large,FALSE,0,0,,javascript:;
 26,0,Reporting,fa fa-th-large,FALSE,0,0,,javascript:;
-27,26,Log Data XML,fa fa-th-large,FALSE,0,0,,javascript:;
-28,26,Respon Manual,fa fa-th-large,FALSE,0,0,,javascript:;
+27,26,Report Data Scan,fa fa-th-large,FALSE,0,0,,/report/data-scan
+28,26,Report Current Now,fa fa-th-large,FALSE,0,0,,javascript:;
 29,26,Report Data Timbun,fa fa-th-large,FALSE,0,0,,javascript:;
 30,0,Custom,fa fa-th-large,FALSE,0,0,,javascript:;
 31,30,Inventory,fa fa-th-large,FALSE,0,0,,/custom/inventory
