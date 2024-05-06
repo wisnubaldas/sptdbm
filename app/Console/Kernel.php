@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\Domain\ReportDomain;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -14,8 +14,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-            echo "sdasdasd";
-        })->everySecond();
+            $report = new ReportDomain;
+            // $report->data_timbun();
+            $report->first_run();
+        })->dailyAt('00:10');
     }
 
     /**
