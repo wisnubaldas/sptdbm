@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             $report = new ReportDomain;
-            // $report->data_timbun();
-            $report->first_run();
+            $report->data_timbun();
+            // $report->first_run();
         })->dailyAt('00:10');
     }
 
