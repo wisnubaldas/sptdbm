@@ -14,7 +14,7 @@ use Carbon\CarbonPeriod;
  */
 class ReportDomain implements ReportDomainInterface
 {
-
+    
     public function data_timbun($date = null)
     {
         if(!$date){

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Mail\CobaEmail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('tes-mail',function(){
+    try {
+        Mail::to('wisnubaldas@gmail.com')->send(new CobaEmail());
+        dd('Sukses kirim email');
+    } catch (\Exception $e) {
+        dd($e);
+    }
+    
+});
 
 Auth::routes();
 Route::get('logout', function ()
@@ -23,3 +34,4 @@ Route::get('logout', function ()
 })->name('logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

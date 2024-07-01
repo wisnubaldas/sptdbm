@@ -21,6 +21,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         
         $this->app->bind(\App\Domain\ReportDomainInterface::class,\App\Domain\ReportDomain::class);
+        $this->app->bind(\App\UseCase\ReportCurrentNowUseCaseInterface::class,\App\UseCase\ReportCurrentNowUseCase::class);
         //:end-bindings:
     }
 }
