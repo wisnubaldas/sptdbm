@@ -13,6 +13,7 @@ $tab = ['tab-1','tab-2','tab-3'];
 
     <h1 class="page-header">Data <small>timbun Per hari</small></h1>
     
+
 @endsection
 
 @push('js')

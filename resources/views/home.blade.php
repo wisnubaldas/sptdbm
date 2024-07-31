@@ -162,6 +162,7 @@
     <script src="../assets/plugins/accounting.js" type="text/javascript"></script>
     <script src="../assets/plugins/moment.locales.js" type="text/javascript"></script>
     <script src="../assets/js/demo/dashboard.js" type="text/javascript"></script>
+    <script src="../assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <script>
         let makeData = {
             donatOne: function(d) {
@@ -180,19 +181,19 @@
                 });
 
             },
-            removeTag : function(str) {
-    if ((str === null) || (str === ''))
-        return false;
-    else
-        str = str.toString();
- 
-    // Regular expression to identify HTML tags in
-    // the input string. Replacing the identified
-    // HTML tag with a null string.
-    return str.replace(/(<([^>]+)>)/ig, '');
-}
+            removeTag: function(str) {
+                if ((str === null) || (str === ''))
+                    return false;
+                else
+                    str = str.toString();
+
+                // Regular expression to identify HTML tags in
+                // the input string. Replacing the identified
+                // HTML tag with a null string.
+                return str.replace(/(<([^>]+)>)/ig, '');
+            }
         }
-        let logXml = function(d){
+        let logXml = function(d) {
             let data = d.log_xml.reverse();
             let res = [];
             for (const key in data) {
@@ -219,16 +220,31 @@
             $('#tgl-sekarang').html(moment().locale('id').format('MMMM YYYY'))
 
             // ################# bikin label nya ###################################
-            let dataLabel = function() {
+            let dataLabel;
+            if (d.hasOwnProperty('periode')) {
+                // console.log(d.periode)
+                const mulaiBulan = moment(d.periode.start);
+                const akhirBulan = moment(d.periode.end);
+                const arrayHari = [];
+
+                for (let m = moment(mulaiBulan); m.diff(akhirBulan, 'days') <= 0; m.add(1, 'days')) {
+                    arrayHari.push([moment(m).locale('id').format('MMDD'), moment(m).locale('id').format('MMM Do')]);
+                }
+                // console.log(arrayHari)
+                dataLabel = arrayHari
+            } else {
                 let tgl = moment().locale('id').daysInMonth();
+                // console.log(tgl)
                 let arrDays = [];
                 while (tgl) {
                     let curr = moment().locale('id').date(tgl).format('MMM Do')
                     arrDays.push([tgl, curr]);
                     tgl--;
                 }
-                return arrDays.reverse();
+                // console.log(arrDays);
+                dataLabel = arrDays.reverse();
                 // console.log(arrDays.reverse());
+
             }
 
             function showTooltip(x, y, contents, lbl) {
@@ -238,10 +254,23 @@
                     left: x - 55
                 }).appendTo("body").fadeIn(200);
             }
+
             if ($('#interactive-chart').length !== 0) {
 
                 // ############ bikin datanya ###############################
                 let ngeloop = function(d) {
+
+                    // if (d.hasOwnProperty('periode')) {
+                    //     let x = []
+                    //     for (const key in d) {
+                    //         if (Object.hasOwnProperty.call(d, key)) {
+                    //             const el = d[key];
+                    //             x.push([el.tgl, el.jml]);
+                    //         }
+                    //     }
+                    //     return x;
+
+                    // } else {
                     let x = []
                     for (const key in d) {
                         if (Object.hasOwnProperty.call(d, key)) {
@@ -249,14 +278,18 @@
                             x.push([el.tgl, el.jml]);
                         }
                     }
-                    return x;
+                    // console.log(x,'data jadi nya')
 
+                    return x;
+                    // }
                 }
+
+                // console.log(dataLabel, 'data label nya')
+                // console.log(d.import, ' data mentah nya')
                 var data1 = ngeloop(d.import)
                 var data2 = ngeloop(d.eksport)
 
                 var xLabel = dataLabel
-
                 $.plot($("#interactive-chart"), [{
                     data: data1,
                     label: "Import",
@@ -338,7 +371,9 @@
                     event.preventDefault();
                 });
             }
-        };
+
+        }
+
         var handleChartTwo = function(d) {
             // ############### bikin  datanya ###############
             let ngeloop = function(d) {
@@ -433,6 +468,47 @@
         let chartOne = "{{ route('get-data-chart') }}";
 
         $(document).ready(function() {
+            // date picker
+            $("#default-daterange").daterangepicker({
+                opens: "right",
+                format: "DD/MM/YYYY",
+                separator: " to ",
+                startDate: moment().subtract(29, "days"),
+                endDate: moment(),
+                maxSpan: {
+                    days: 32
+                }
+            }, function(start, end) {
+                $("#default-daterange input").val(start.format("D MMMM, YYYY") + " - " + end.format(
+                    "D MMMM, YYYY"));
+            });
+            $('#default-daterange').on('apply.daterangepicker', function(ev, picker) {
+                const start = picker.startDate.format('YYYYMMDD');
+                const end = picker.endDate.format('YYYYMMDD');
+                // console.log(start);
+                // console.log(end);
+                $.ajax({
+                    url: chartOne,
+                    method: "GET",
+                    data: {
+                        'start': start,
+                        'end': end
+                    }
+                }).done(function(response) {
+                    response.periode = {
+                        'start': start,
+                        'end': end
+                    }
+                    // console.log(response)
+                    handleInteractiveChart(response)
+                    // handleChartTwo(response)
+                    // chartDonatOne(response)
+                    // logXml(response)
+                }).fail(function(jqXHR, textStatus) {
+                    console.log(jqXHR)
+                });
+
+            })
             $.ajax({
                 url: cardData,
                 method: "GET",
@@ -514,4 +590,5 @@
     <link href="../assets/plugins/jvectormap-next/jquery-jvectormap.css" rel="stylesheet" />
     <link href="../assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
     <link href="../assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
 @endpush
