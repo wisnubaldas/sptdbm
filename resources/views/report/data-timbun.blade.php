@@ -12,7 +12,7 @@ $tab = ['tab-1','tab-2','tab-3'];
     </ol>
 
     <h1 class="page-header">Data <small>timbun Per hari</small></h1>
-    <x-tab-component :tab="$tab"/>
+    
 @endsection
 
 @push('js')
