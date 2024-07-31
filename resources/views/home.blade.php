@@ -330,7 +330,7 @@
                         ticks: 10,
                         tickColor: COLOR_DARK_TRANSPARENT_2,
                         min: 0,
-                        max: 200
+                        // max: 200
                     },
                     grid: {
                         hoverable: true,
