@@ -71,6 +71,15 @@ class DashboardUseCase implements DashboardUseCaseInterface
             ->groupBy('tgl_bl_awb')
             ->get();
     }
+    
+    public function pie_pertahun() {
+        // dd($this->dateNow->format('Y'));
+        return GateImportOut::select(DB::raw('SUBSTRING(tgl_bl_awb,5,2) AS bln, COUNT(id_kms) AS jml_out'))
+            ->whereRaw("(date_format(str_to_date(tgl_bl_awb,'%Y%m%d'),'%Y') BETWEEN '" . $this->dateNow->startOfYear()->format('Y') . "' AND '" . $this->dateNow->endOfYear()->format('Y') . "')")
+            ->groupBy('bln')
+            ->get();
+    }
+
     public function donat_per_tahun()
     {
         // dd($this->dateNow->format('Y'));

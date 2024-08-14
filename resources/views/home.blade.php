@@ -14,7 +14,7 @@
             <div class="col-xl-12">
                 <x-dashboard.chart-dashboard-one />
             </div>
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <x-dashboard.chart-dashboard-two />
 
                 <div class="panel panel-inverse" data-sortable-id="index-8">
@@ -107,8 +107,16 @@
                     </div>
                 </div>
             </div>
-            {{-- end grid --}}
+            <div class="col-xl-4">
+                <div class="panel panel-inverse pb-2" data-sortable-id="index-6">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Rekap In/Out Per Bulan</h4>
+                    </div>
+                    <canvas id="rekap-perbulan"></canvas>
+                </div>
+            </div>
 
+            {{-- end grid --}}
             <div class="col-xl-4">
                 <div class="panel panel-inverse pb-2" data-sortable-id="index-6">
                     <div class="panel-heading">
@@ -159,6 +167,9 @@
     <script src="../assets/plugins/jvectormap-next/jquery-jvectormap-world-mill.js" type="text/javascript"></script>
     <script src="../assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="../assets/plugins/chart.js/dist/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../assets/plugins/accounting.js" type="text/javascript"></script>
     <script src="../assets/plugins/moment.locales.js" type="text/javascript"></script>
     <script src="../assets/js/demo/dashboard.js" type="text/javascript"></script>
@@ -464,8 +475,13 @@
             $('#gate-in-export').html(accounting.formatNumber(d.export.gate_in))
             $('#gate-out-export').html(accounting.formatNumber(d.export.gate_out))
         }
+
+        // JQUERY first page
+
         let cardData = "{{ route('card-data') }}";
         let chartOne = "{{ route('get-data-chart') }}";
+
+        console.log(cardData)
 
         $(document).ready(function() {
             // date picker
@@ -509,6 +525,7 @@
                 });
 
             })
+            // ajax buat card atas 
             $.ajax({
                 url: cardData,
                 method: "GET",
@@ -527,6 +544,7 @@
                 handleChartTwo(response)
                 chartDonatOne(response)
                 logXml(response)
+                rekapPie(response.rekap_pertahun)
             }).fail(function(jqXHR, textStatus) {
                 console.log(jqXHR)
             });
@@ -535,6 +553,51 @@
         })
     </script>
     <script>
+        let rekapPie = function(data) {
+            // console.log('rekap chart pie', data)
+            let ctx = document.getElementById('rekap-perbulan').getContext('2d');
+            const xValues = data.bulan;
+            const yValues = data.jml;
+            const barColors = [
+                COLOR_PINK_TRANSPARENT_7,
+                COLOR_SILVER_TRANSPARENT_7,
+                COLOR_RED_TRANSPARENT_7,
+                COLOR_PURPLE_TRANSPARENT_7,
+                COLOR_ORANGE_TRANSPARENT_7,
+                COLOR_YELLOW_TRANSPARENT_7,
+                COLOR_AQUA_TRANSPARENT_7,
+                COLOR_INDIGO_TRANSPARENT_7,
+                COLOR_BLUE_TRANSPARENT_7,
+                COLOR_GREEN_TRANSPARENT_7,
+                COLOR_GREY_TRANSPARENT_7,
+                COLOR_DARK_TRANSPARENT_7
+            ];
+            Chart.defaults.set('plugins.datalabels', {
+                color: '#232624',
+                font:{
+                    size:16,
+                    weight:'bold'
+                }
+            });
+            new Chart(ctx, {
+                plugins: [ChartDataLabels],
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production 2018"
+                    }
+                }
+            });
+        }
+
         let chartDonatOne = function(d) {
             let dataNya = makeData.donatOne(d.import_bruto_tahun)
             Chart.defaults.font.family = FONT_FAMILY;
