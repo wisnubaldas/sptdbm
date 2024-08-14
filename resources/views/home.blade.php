@@ -590,12 +590,20 @@
         }
 
         let chartDonatOne = function(d) {
+            Chart.defaults.set('plugins.datalabels', {
+                color: '#232624',
+                font:{
+                    size:16,
+                    weight:'bold'
+                }
+            });
             let dataNya = makeData.donatOne(d.import_bruto_tahun)
             Chart.defaults.font.family = FONT_FAMILY;
             Chart.defaults.font.weight = FONT_WEIGHT;
 
             var ctx6 = document.getElementById('doughnut-chart').getContext('2d');
             window.myDoughnut = new Chart(ctx6, {
+                plugins: [ChartDataLabels],
                 type: 'doughnut',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sept', 'Okt', 'Nov',
