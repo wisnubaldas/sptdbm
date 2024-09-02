@@ -60,13 +60,13 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
     {
         switch ($request->target) {
             case 'IMPORT':
-                $query = GateImportIn::doesntHave('tegah');
+                $query = GateImportIn::doesntHave('tegah')->where('flag_gateout',0);
                 break;
             case 'EXPORT':
-                $query = GateExpIn::doesntHave('tegah');
+                $query = GateExpIn::doesntHave('tegah')->where('flag_gateout',0);
                 break;
             default:
-                $query = GateImportIn::doesntHave('tegah');
+                $query = GateImportIn::doesntHave('tegah')->where('flag_gateout',0);
                 break;
         }
         
