@@ -15,7 +15,7 @@
                 <x-dashboard.chart-dashboard-one />
             </div>
             <div class="col-xl-12">
-                <x-dashboard.chart-dashboard-two />
+                {{-- <x-dashboard.chart-dashboard-two /> --}}
 
                 <div class="panel panel-inverse" data-sortable-id="index-8">
                     <div class="panel-heading">
