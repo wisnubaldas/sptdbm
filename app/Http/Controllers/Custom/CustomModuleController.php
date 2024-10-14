@@ -43,9 +43,12 @@ class CustomModuleController extends Controller
         return \redirect()->route('custom-module');
     }
     public function detail_release($awb){
+        
         return \App\Models\TpsOnline\AutoPenegahan::where('no_bl_awb',$awb)->first();
     }
     public function custom_excel(Request $r,TpsImport $excel){
+        $this->cekRequestDownload($r);
+        
         return (new TpsImport($r))->download('modul-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
 }

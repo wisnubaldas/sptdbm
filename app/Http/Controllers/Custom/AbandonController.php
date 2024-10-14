@@ -25,6 +25,8 @@ class AbandonController extends Controller
         return $exportData->abandonExportIn($request);
     }
     public function abandon_excel(Request $r,TpsImport $excel){
+        $this->cekRequestDownload($r);
+
         return (new TpsImport($r))->download('abandon-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
 }

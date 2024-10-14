@@ -44,6 +44,8 @@ class CarrentNowController extends Controller
         return \redirect()->route('carrent-now');
     }
     public function currentnow_excel(Request $r,TpsImport $excel){
+        $this->cekRequestDownload($r);
+
         return (new TpsImport($r))->download('carnow-'.Carbon::now()->format('YmdHis').'.xlsx');
     }
 
