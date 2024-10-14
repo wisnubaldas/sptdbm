@@ -57,12 +57,8 @@
         
         // kasih ajax disini
         $('#export-excel').click(function(a){
-            // a.preventDefault()
-            // console.log(propData.tab)
-            // console.log(uri_excel);
             let dataForm = $('#frm-serch').serialize()
             let linkNya = uri_excel+'?type='+propData.tab+'&'+dataForm
-            console.log(linkNya);
             window.open(linkNya, "_blank");
         })
         $('#export-pdf').click(function(a){

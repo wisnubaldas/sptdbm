@@ -17,23 +17,61 @@ class GateInSheet implements FromQuery, WithTitle, ShouldAutoSize, WithHeadings
     public function query()
     {
         if($this->request->type == "IMPORT") {
-            return GateImportIn::query()
-                ->where('no_bl_awb',$this->request->no_bl_awb)
-                ->orWhere('no_daftar_pabean',$this->request->no_daftar_pabean)
-                ->orWhere('ref_num',$this->request->ref_num)
-                ->orWhere('no_master_bl_awb',$this->request->no_master_bl_awb)
-                ->orWhere('wk_inout','like',$this->request->wk_inout.'%')
-                ->orWhere('no_bc11',$this->request->no_bc11);
+            $validate = $this->request->all();
+            unset($validate[0]);
+            $q = GateImportIn::query();
+            if(!empty($validate)){
+                if($this->request->no_bl_awb){
+                    $q->where('no_bl_awb',$this->request->no_bl_awb);
+                }
+                if ($this->request->no_daftar_pabean) {
+                    $q->where('no_daftar_pabean',$this->request->no_daftar_pabean);
+                }
+                if($this->request->ref_num){
+                    $q->where('ref_num',$this->request->ref_num);
+                }
+                if ($this->request->no_master_bl_awb) {
+                    $q->where('no_master_bl_awb',$this->request->no_master_bl_awb);
+                }
+                if ($this->request->wk_inout) {
+                    $q->where('wk_inout','like',$this->request->wk_inout.'%');
+                }
+                if ($this->request->no_bc11) {
+                    $q->where('no_bc11',$this->request->no_bc11);
+                }
+                return $q;
+            }else{
+                return $q->limit(1);
+            }
         }
 
         if($this->request->type == "EXPORT") {
-            return GateExpIn::query()
-                        ->where('no_bl_awb',$this->request->no_bl_awb)
-                        ->orWhere('no_daftar_pabean',$this->request->no_daftar_pabean)
-                        ->orWhere('ref_num',$this->request->ref_num)
-                        ->orWhere('no_master_bl_awb',$this->request->no_master_bl_awb)
-                        ->orWhere('wk_inout','like',$this->request->wk_inout.'%')
-                        ->orWhere('no_bc11',$this->request->no_bc11);
+            $validate = $this->request->all();
+            unset($validate[0]);
+            $q = GateExpIn::query();
+            if(!empty($validate)){
+                if($this->request->no_bl_awb){
+                    $q->where('no_bl_awb',$this->request->no_bl_awb);
+                }
+                if ($this->request->no_daftar_pabean) {
+                    $q->where('no_daftar_pabean',$this->request->no_daftar_pabean);
+                }
+                if($this->request->ref_num){
+                    $q->where('ref_num',$this->request->ref_num);
+                }
+                if ($this->request->no_master_bl_awb) {
+                    $q->where('no_master_bl_awb',$this->request->no_master_bl_awb);
+                }
+                if ($this->request->wk_inout) {
+                    $q->where('wk_inout','like',$this->request->wk_inout.'%');
+                }
+                if ($this->request->no_bc11) {
+                    $q->where('no_bc11',$this->request->no_bc11);
+                }
+                return $q;
+            }else {
+                return $q->limit(1);
+            }
         }
     }
     public function title(): string
