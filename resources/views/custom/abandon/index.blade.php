@@ -90,7 +90,7 @@
                         break;
                 }
             })
-            propData.searchable(tblGateIn, importIn, exportIn)
+            propData.searchable(tblGateIn, null,importIn, null, exportIn, null)
 
         });
     </script>

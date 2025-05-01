@@ -206,11 +206,15 @@ let propData = {
             if (propData.tab == 'IMPORT') {
                 console.log(propData.tab);
                 tblGateIn.ajax.url(importIn + '?' + dataForm).load()
-                tblGateOut.ajax.url(importOut + '?' + dataForm).load()
+                if(tblGateOut){
+                    tblGateOut.ajax.url(importOut + '?' + dataForm).load()
+                }
             } else {
                 console.log(propData.tab);
                 tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
-                tblGateOut.ajax.url(exportOut + '?' + dataForm).load()
+                if(tblGateOut){
+                    tblGateOut.ajax.url(exportOut + '?' + dataForm).load()
+                }
             }
             $('#frm-serch')[0].reset();
         })
