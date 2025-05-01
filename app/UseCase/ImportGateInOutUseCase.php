@@ -272,7 +272,7 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
     public function abandonImportIn($request)
     {
         $date = Carbon::now()->subDays(30);
-        return DataTables::of(GateImportIn::query()->where('tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout', 6))
+        return DataTables::of(GateImportIn::query()->where('tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout', 0))
             ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $query->where('no_bl_awb', request('no_bl_awb'));

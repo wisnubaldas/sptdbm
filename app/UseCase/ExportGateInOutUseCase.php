@@ -66,7 +66,7 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
     public function abandonExportIn($request)
     {
         $date = Carbon::now()->subDays(30);
-        $query = GateExpIn::query()->where('tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout', 6);
+        $query = GateExpIn::query()->where('tgl_bc11', '<', $date->format('Ymd'))->where('flag_gateout', 0);
         return DataTables::of($query)
             ->filter(function ($query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
