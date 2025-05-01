@@ -204,11 +204,11 @@ let propData = {
             a.preventDefault()
             let dataForm = $('#frm-serch').serialize()
             if (propData.tab == 'IMPORT') {
-                // console.log(propData.tab);
+                console.log(propData.tab);
                 tblGateIn.ajax.url(importIn + '?' + dataForm).load()
                 tblGateOut.ajax.url(importOut + '?' + dataForm).load()
             } else {
-                // console.log(propData.tab);
+                console.log(propData.tab);
                 tblGateIn.ajax.url(exportIn + '?' + dataForm).load()
                 tblGateOut.ajax.url(exportOut + '?' + dataForm).load()
             }
