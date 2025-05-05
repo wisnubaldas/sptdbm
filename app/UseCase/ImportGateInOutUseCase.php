@@ -59,25 +59,29 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
 
     public function getCurrentNow($request)
     {
-        $sebagian = GateImpSebagian::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at');
-        $curr =  GateImportIn::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at');
+        $sebagian = GateImpSebagian::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at')->toBase();
+        $curr =  GateImportIn::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at')->toBase();
+        $query = $curr->unionAll($sebagian);
 
         switch ($request->target) {
             case 'IMPORT':
-                $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // GateImportIn::doesntHave('tegah')->union($sebagian)->where('flag_gateout',0);
+                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in'); // $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // GateImportIn::doesntHave('tegah')->union($sebagian)->where('flag_gateout',0);
                 break;
             case 'EXPORT':
                 $query = GateExpIn::doesntHave('tegah')->where('flag_gateout',0);
                 break;
             default:
-            $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // $query = GateImportIn::doesntHave('tegah')->whereRelation('sebagian')->where('flag_gateout',0);
+                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in');    // $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // $query = GateImportIn::doesntHave('tegah')->whereRelation('sebagian')->where('flag_gateout',0);
                 break;
         }
         
-        return DataTables::of($query)
-            ->filter(function ($query) {
+        return DataTables::of($final_query)
+            ->filter(function ($final_query){
+                $final_query->where('flag_gateout',0);
+            })
+            ->filter(function ($final_query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
-                    $query->where('no_bl_awb', request('no_bl_awb'));
+                    $final_query->where('no_bl_awb', request('no_bl_awb'));
                 }
                 if (request()->has('no_bc11') && request()->filled('no_bc11')) {
                     $query->where('no_bc11', request('no_bc11'));
