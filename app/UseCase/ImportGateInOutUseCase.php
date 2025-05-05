@@ -65,35 +65,32 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
 
         switch ($request->target) {
             case 'IMPORT':
-                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in')->where('flag_gateout',0); // $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // GateImportIn::doesntHave('tegah')->union($sebagian)->where('flag_gateout',0);
+                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in')->where('flag_gateout',0);  // GateImportIn::doesntHave('tegah')->union($sebagian)->where('flag_gateout',0);
                 break;
             case 'EXPORT':
                 $query = GateExpIn::doesntHave('tegah')->where('flag_gateout',0);
                 break;
             default:
-                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in')->where('flag_gateout',0);    // $query = $curr->unionAll($sebagian)->doesntHave('tegah')->where('flag_gateout',0); // $query = GateImportIn::doesntHave('tegah')->whereRelation('sebagian')->where('flag_gateout',0);
+                $final_query = DB::connection('db_tpsonline')->query()->fromSub($query,'gate_imp_in')->where('flag_gateout',0);   // $query = GateImportIn::doesntHave('tegah')->whereRelation('sebagian')->where('flag_gateout',0);
                 break;
         }
         
         return DataTables::of($final_query)
-            // ->filter(function ($final_query){
-            //     $final_query->where('flag_gateout',0);
-            // })
             ->filter(function ($final_query) {
                 if (request()->has('no_bl_awb') && request()->filled('no_bl_awb')) {
                     $final_query->where('no_bl_awb', request('no_bl_awb'));
                 }
                 if (request()->has('no_bc11') && request()->filled('no_bc11')) {
-                    $query->where('no_bc11', request('no_bc11'));
+                    $final_query->where('no_bc11', request('no_bc11'));
                 }
                 if (request()->has('no_daftar_pabean') && request()->filled('no_daftar_pabean')) {
-                    $query->where('no_daftar_pabean', request('no_daftar_pabean'));
+                    $final_query->where('no_daftar_pabean', request('no_daftar_pabean'));
                 }
                 if (request()->has('no_master_bl_awb') && request()->filled('no_master_bl_awb')) {
-                    $query->where('no_master_bl_awb', request('no_master_bl_awb'));
+                    $final_query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $final_query->where('wk_inout', 'like', request('wk_inout') . "%");
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
