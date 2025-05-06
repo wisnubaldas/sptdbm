@@ -82,15 +82,18 @@
     <script src="{{ asset('/assets/plugins/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-fixedcolumns-bs4/js/fixedColumns.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script>
-        
+        let tblGateIn;
+        let tblGateOut;
         $(document).ready(function() {
             let importIn = {{ Js::from(route('inventory.get_data_in')) }};
             let importOut = {{ Js::from(route('inventory.get_data_out')) }};
             let exportIn = {{ Js::from(route('inventory.export_in')) }};
             let exportOut = {{ Js::from(route('inventory.export_out')) }};
 
-            let tblGateIn = $('#tbl-gatein').DataTable({
+             tblGateIn = $('#tbl-gatein').DataTable({
                 // deferLoading: 57,
                 lengthChange: false,
                 searching: false,
@@ -102,7 +105,7 @@
                 columns: custom.fieldTable
             });
 
-            let tblGateOut = $('#tbl-gateout').DataTable({
+             tblGateOut = $('#tbl-gateout').DataTable({
                 // deferLoading: 57,
                 lengthChange: false,
                 searching: false,
@@ -114,6 +117,49 @@
                 columns: custom.fieldTable
             });
 
+            $('#export-excel').on('click',function(a){
+                const headers = [];
+                const data = [];
+                const dataGateOut = [];
+
+                $('#tbl-gatein thead th').each(function () {
+                    headers.push($(this).text().trim());
+                });
+
+                data.push(headers); // tambahkan header sebagai baris pertama
+                // const jsonData = tbl.rows({ search: 'applied' }).data().toArray();
+                
+                
+                // Ambil data dari DataTables
+                tblGateIn.rows({ search: 'applied' }).every(function () {
+                    const rowNode = this.node(); // Ambil node DOM barisnya
+                    const row = [];
+                    $(rowNode).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    data.push(row);
+                });
+
+                tblGateOut.rows({ search: 'applied' }).every(function () {
+                    const rowNode = this.node(); // Ambil node DOM barisnya
+                    const row = [];
+                    $(rowNode).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    dataGateOut.push(row);
+                });
+
+                    // Buat worksheet dan workbook
+                    const gateInExcel = XLSX.utils.aoa_to_sheet(data);
+                    const gateOutExcel = XLSX.utils.aoa_to_sheet(dataGateOut);
+
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, gateInExcel, "GateIn");
+                    XLSX.utils.book_append_sheet(workbook, gateOutExcel, "GateOut");
+
+                    // Simpan file Excel
+                    XLSX.writeFile(workbook, "Inventory.xlsx");
+            })
             // table.on('mouseenter', 'td', function () {
 
             //         let colIdx = table.cell(this).index().column;

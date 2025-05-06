@@ -59,10 +59,13 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script>
+        let tbl;
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('custom-module')) }};
-            let tbl = $('#myTable').DataTable({
+             tbl = $('#myTable').DataTable({
                 responsive: false,
                 serverSide: true,
                 processing: true,
@@ -82,6 +85,35 @@
                                                         "searchable": false,
                                                     },])
             });
+
+            $('#export-excel').on('click',function(a){
+                const headers = [];
+                const data = [];
+                $('#tbl-gatein thead th').each(function () {
+                    headers.push($(this).text().trim());
+                });
+
+                data.push(headers); // tambahkan header sebagai baris pertama
+                // const jsonData = tbl.rows({ search: 'applied' }).data().toArray();
+                
+                
+                // Ambil data dari DataTables
+                tbl.rows({ search: 'applied' }).every(function () {
+                    const rowNode = this.node(); // Ambil node DOM barisnya
+                    const row = [];
+                    $(rowNode).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    data.push(row);
+                });
+                    // Buat worksheet dan workbook
+                    const worksheet = XLSX.utils.aoa_to_sheet(data);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "DataModule");
+
+                    // Simpan file Excel
+                    XLSX.writeFile(workbook, "Module.xlsx");
+            })
 
             $('#search-data').on('click',function(a){
                 a.preventDefault()

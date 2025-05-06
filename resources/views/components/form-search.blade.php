@@ -56,17 +56,18 @@
             });
         
         // kasih ajax disini
-        $('#export-excel').click(function(a){
-            let dataForm = $('#frm-serch').serialize()
-            let linkNya = uri_excel+'?type='+propData.tab+'&'+dataForm
-            window.open(linkNya, "_blank");
-        })
-        $('#export-pdf').click(function(a){
-            let dataForm = $('#frm-serch').serialize()
-            let linkNya = uri_pdf+'?type='+propData.tab+'&'+dataForm
-            console.log(linkNya);
-            window.open(linkNya, "_blank");
-        })
+        // $('#export-excel').click(function(a){
+        //     let dataForm = $('#frm-serch').serialize()
+        //     let linkNya = uri_excel+'?type='+propData.tab+'&'+dataForm
+        //     window.open(linkNya, "_blank");
+        // })
+        
+        // $('#export-pdf').click(function(a){
+        //     let dataForm = $('#frm-serch').serialize()
+        //     let linkNya = uri_pdf+'?type='+propData.tab+'&'+dataForm
+        //     console.log(linkNya);
+        //     window.open(linkNya, "_blank");
+        // })
     })
 </script>
 @endpush

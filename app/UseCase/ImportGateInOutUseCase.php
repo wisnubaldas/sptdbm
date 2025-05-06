@@ -87,7 +87,7 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $final_query->where('no_daftar_pabean', request('no_daftar_pabean'));
                 }
                 if (request()->has('no_master_bl_awb') && request()->filled('no_master_bl_awb')) {
-                    $final_query->where('no_master_bl_awb', request('no_master_bl_awb'));
+                    $final_query->where('no_master_bl_awb', request('no_master_bl_awb')); 
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
                     $final_query->where('wk_inout', 'like', request('wk_inout') . "%");

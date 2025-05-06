@@ -51,17 +51,20 @@
       @endsection
 
 @push('js')
-    <script src="{{ asset('/assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script>
+        let tbl;
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('carrent-now')) }};
-            let tbl = $('#myTable').DataTable({
+                tbl = $('#myTable').DataTable({
                             responsive: false,
-                            serverSide: true,
+                            serverSide: false,
                             processing: true,
                             scrollX: true,
                             ajax: dInOut,
@@ -104,16 +107,47 @@
                 }
             })
         });
+
+        $('#export-excel').on('click',function(a){
+                const headers = [];
+                const data = [];
+                $('#myTable thead th').each(function () {
+                    headers.push($(this).text().trim());
+                });
+
+                data.push(headers); // tambahkan header sebagai baris pertama
+                // const jsonData = tbl.rows({ search: 'applied' }).data().toArray();
+                
+                
+                // Ambil data dari DataTables
+                tbl.rows({ search: 'applied' }).every(function () {
+                    const rowNode = this.node(); // Ambil node DOM barisnya
+                    const row = [];
+                    $(rowNode).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    data.push(row);
+                });
+                    // Buat worksheet dan workbook
+                    const worksheet = XLSX.utils.aoa_to_sheet(data);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+                    // Simpan file Excel
+                    XLSX.writeFile(workbook, "current_now.xlsx");
+            })
+    
     </script>
+    
 @endpush
 
 @push('css')
-    <link href="{{ asset('/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
+    <link href="{{ asset('assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
         .modal-loader {
             background: rgba(255, 255, 255, 0.85);

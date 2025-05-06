@@ -55,18 +55,20 @@
     <script src="{{ asset('/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script>
-        
+        let tblGateIn
         $(document).ready(function() {
             let importIn = {{ Js::from(route('abandon.import-in')) }};
             let exportIn = {{ Js::from(route('abandon.export-in')) }};
 
-            let tblGateIn = $('#tbl-gatein').DataTable({
+            tblGateIn = $('#tbl-gatein').DataTable({
                 // deferLoading: 57,
                 lengthChange: false,
                 searching: false,
                 responsive: false,
-                serverSide: true,
+                serverSide: false,
                 processing: true,
                 scrollX: true,
                 ajax: importIn,
@@ -93,6 +95,35 @@
             propData.searchable(tblGateIn, null,importIn, null, exportIn, null)
 
         });
+
+        $('#export-excel').on('click',function(a){
+                const headers = [];
+                const data = [];
+                $('#tbl-gatein thead th').each(function () {
+                    headers.push($(this).text().trim());
+                });
+
+                data.push(headers); // tambahkan header sebagai baris pertama
+                // const jsonData = tbl.rows({ search: 'applied' }).data().toArray();
+                
+                
+                // Ambil data dari DataTables
+                tblGateIn.rows({ search: 'applied' }).every(function () {
+                    const rowNode = this.node(); // Ambil node DOM barisnya
+                    const row = [];
+                    $(rowNode).find('td').each(function () {
+                        row.push($(this).text().trim());
+                    });
+                    data.push(row);
+                });
+                    // Buat worksheet dan workbook
+                    const worksheet = XLSX.utils.aoa_to_sheet(data);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+                    // Simpan file Excel
+                    XLSX.writeFile(workbook, "abadon.xlsx");
+            })
     </script>
 @endpush
 
