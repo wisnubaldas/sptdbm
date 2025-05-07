@@ -11,7 +11,7 @@ use \App\Models\TpsOnline\GateImpSebagian;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\UseCase\ExportGateInOutUseCase;
-
+use \Facades\App\Helpers\DateTimeHelper;
 /**
  * Class UseCase.
  *
@@ -59,6 +59,7 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
 
     public function getCurrentNow($request)
     {
+
         $sebagian = GateImpSebagian::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at')->toBase();
         $curr =  GateImportIn::select('id_kms', 'kd_dok', 'kd_tps', 'nm_angkut', 'no_voy_flight', 'call_sign', 'tg_tiba', 'kd_gudang', 'ref_num', 'no_bl_awb', 'tgl_bl_awb', 'no_master_bl_awb', 'tgl_master_bl_awb', 'id_consignee', 'consignee', 'consignee_alm', 'bruto', 'uraian_brg', 'no_bc11', 'tgl_bc11', 'no_pos_bc11', 'cont_asal', 'seri_kem', 'kd_kem', 'jml_kem', 'kd_timbun', 'kd_dok_inout', 'no_dok_inout', 'tgl_dok_inout', 'wk_inout', 'kd_sar_angkut', 'no_pol', 'pel_muat', 'pel_transit', 'pel_bongkar', 'gudang_tujuan', 'kode_kantor', 'no_daftar_pabean', 'tgl_daftar_pabean', 'no_segel_bc', 'tg_segel_bc', 'no_ijin_tps', 'tgl_ijin_tps', 'flag_transfer', 'respon', 'flag_gateout', 'flag_wk_rekam', 'flag_resending', 'created_at', 'updated_at')->toBase();
         $query = $curr->union($sebagian);
@@ -90,7 +91,8 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $final_query->where('no_master_bl_awb', request('no_master_bl_awb')); 
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $final_query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $final_query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -178,7 +180,8 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -245,7 +248,8 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -268,7 +272,8 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -292,7 +297,8 @@ class ImportGateInOutUseCase implements ImportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')

@@ -6,6 +6,7 @@ use App\Models\TpsOnline\GateExpIn;
 use App\Models\TpsOnline\GateExpOut;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use \Facades\App\Helpers\DateTimeHelper;
 
 /**
  * Class UseCase.
@@ -33,7 +34,8 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -57,7 +59,8 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -82,7 +85,8 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -106,7 +110,8 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')
@@ -141,7 +146,8 @@ class ExportGateInOutUseCase implements ExportGateInOutUseCaseInterface
                     $query->where('no_master_bl_awb', request('no_master_bl_awb'));
                 }
                 if (request()->has('wk_inout') && request()->filled('wk_inout')) {
-                    $query->where('wk_inout', 'like', request('wk_inout') . "%");
+                    $dateRange = DateTimeHelper::wk_inout_format( request('wk_inout'));
+                    $query->whereBetween('wk_inout', $dateRange);
                 }
             })
             ->orderColumns(['no_bl_awb', 'wk_inout'], '-:column $1')

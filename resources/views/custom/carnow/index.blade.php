@@ -60,6 +60,7 @@
         let tbl;
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('carrent-now')) }};
+            // console.log(dInOut)
                 tbl = $('#myTable').DataTable({
                             pageLength: 200,
                             responsive: false,

@@ -7,7 +7,6 @@
                     <label for="floatingInput" class="d-flex align-items-center fs-13px">No BC 1.1</label>
                 </div>
                 <div class="btn btn-group m-0 p-0">
-                    <button class="btn btn-primary" type="button" id="export-pdf">Download PDF</button>
                     <button class="btn btn-warning" type="button" id="export-excel">Download Excel</button>
                     <button class="btn btn-info" type="button" id="search-data"><i class="fas fa-fw fa-search"></i> Search</button>
                 </div>
@@ -42,19 +41,36 @@
     </form>
 </div>
 @push('js')
-<script src="{{ asset('/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('assets/plugins/moment.locales.js') }}" type="text/javascript"></script>
+{{-- <script src="{{ asset('assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script> --}}
+<script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
 <script>
     let uri_excel = {{ Js::from($excel) }};
     let uri_pdf = {{ Js::from($pdf) }};
     
     $(document).ready(function(){
-        $("#gate-in-date").datepicker({
-                todayHighlight: true,
-                autoclose: true,
-                format:'yyyymmdd',
-                orientation: "bottom left"
-            });
+
+        // $("#gate-in-date").datepicker({
+        //         todayHighlight: true,
+        //         autoclose: true,
+        //         format:'yyyymmdd',
+        //         orientation: "bottom left"
+        //     });
         
+        $("#gate-in-date").daterangepicker({
+            opens: "right",
+            format: "DD/MM/YYYY",
+            separator: " to ",
+            startDate: moment().subtract(29, "days"),
+            endDate: moment(),
+            maxSpan: {
+                days: 32
+            }
+        }, function(start, end) {
+            $("#gate-in-date input").val(start.format("D MMMM, YYYY") + " - " + end.format(
+                "D MMMM, YYYY"));
+        });
+
         // kasih ajax disini
         // $('#export-excel').click(function(a){
         //     let dataForm = $('#frm-serch').serialize()
@@ -73,4 +89,5 @@
 @endpush
 @push('css')
 <link href="{{ asset('/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 @endpush
