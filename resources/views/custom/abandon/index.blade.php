@@ -65,10 +65,11 @@
 
             tblGateIn = $('#tbl-gatein').DataTable({
                 // deferLoading: 57,
+                pageLength: 200,
                 lengthChange: false,
                 searching: false,
                 responsive: false,
-                serverSide: false,
+                serverSide: true,
                 processing: true,
                 scrollX: true,
                 ajax: importIn,

@@ -38,7 +38,7 @@
                 <div class="panel-body">
                     <div class="modal-content">
                         <div class="table-responsive">
-                            <table id="myTable" class="table table-striped table-bordered align-middle display nowrap"
+                            <table id="myTable" class="table table-striped table-bordered align-middle display nowrap compact"
                                 style="width: 100%">
                             </table>
                         </div>
@@ -63,8 +63,9 @@
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('carrent-now')) }};
                 tbl = $('#myTable').DataTable({
+                            pageLength: 200,
                             responsive: false,
-                            serverSide: false,
+                            serverSide: true,
                             processing: true,
                             scrollX: true,
                             ajax: dInOut,
@@ -149,6 +150,13 @@
     <link href="{{ asset('assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     <style type="text/css">
+        #myTable tbody tr {
+            height: 20px; /* tinggi tetap */
+            font-size: 12px; /* perkecil ukuran teks */
+        }
+        #myTable tbody td {
+            padding: 4px 8px; /* sesuaikan padding */
+        }
         .modal-loader {
             background: rgba(255, 255, 255, 0.85);
             position: absolute;

@@ -95,6 +95,7 @@
 
              tblGateIn = $('#tbl-gatein').DataTable({
                 // deferLoading: 57,
+                pageLength: 200,
                 lengthChange: false,
                 searching: false,
                 responsive: false,
@@ -106,6 +107,7 @@
             });
 
              tblGateOut = $('#tbl-gateout').DataTable({
+                pageLength: 200,
                 // deferLoading: 57,
                 lengthChange: false,
                 searching: false,

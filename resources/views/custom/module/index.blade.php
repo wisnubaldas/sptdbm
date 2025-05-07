@@ -66,6 +66,7 @@
         $(document).ready(function() {
             let dInOut = {{ Js::from(route('custom-module')) }};
              tbl = $('#myTable').DataTable({
+                pageLength: 200,
                 responsive: false,
                 serverSide: true,
                 processing: true,
