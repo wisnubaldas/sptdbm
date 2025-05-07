@@ -31,8 +31,6 @@
                                 class="fa fa-redo"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i
                                 class="fa fa-minus"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i
-                                class="fa fa-times"></i></a>
                     </div>
                 </div>
                 <div class="panel-body">
